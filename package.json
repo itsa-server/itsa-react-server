@@ -1,0 +1,60 @@
+{
+  "name": "itsa-react-server",
+  "version": "0.1.1",
+  "description": "MVC server for serverside rendered react apps",
+  "author": "",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/itsa-server/itsa-react-server"
+  },
+  "bugs": {
+    "url": "https://github.com/itsa-server/itsa-react-server/issues"
+  },
+  "keywords": [
+    "itsa",
+    "itsasbreuk",
+    "itsa-server",
+    "server"
+  ],
+  "main": "server.js",
+  "engines": {
+    "node": "*"
+  },
+  "dependencies": {
+    "fs-extra": "^0.18.3",
+    "fs-promise": "^0.3.1",
+    "good": "^5.1.2",
+    "good-console": "^4.1.0",
+    "handlebars": "^3.0.3",
+    "hapi-sass": "^1.0.0",
+    "inline-script-css": "itsa-server/inline-script-css",
+    "js-ext": "itsa/js-ext",
+    "path": "^0.11.14",
+    "request": "^2.55.0",
+    "stream": "0.0.2",
+    "file-upload-handler": "itsa-server/file-upload-handler",
+    "suppress-logging": "itsa-server/suppress-logging",
+    "uglify-js": "^2.4.23",
+    "utils": "itsa/utils"
+  },
+  "devDependencies": {
+    "chai": "^1.9.1",
+    "istanbul": "^0.3.0",
+    "jshint": "^2.5.5",
+    "mocha": "^1.21.4"
+  },
+  "scripts": {
+    "pretest": "jshint  ./lib/*.js",
+    "test": "mocha tests/*.js  && istanbul cover $(which _mocha) -- tests/*.js",
+    "lint": "jshint ./lib/*.js",
+    "start": "node server.js"
+  },
+  "homepage": "http://itsa.github.io",
+  "maintainers": [
+    {
+      "name": "Marco Asbreuk",
+      "email": "marco@itsasbreuk.nl"
+    }
+  ],
+  "license": "New BSD"
+}
