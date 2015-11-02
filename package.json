@@ -1,11 +1,11 @@
 {
   "name": "itsa-react-server",
-  "version": "0.1.1",
-  "description": "MVC server for serverside rendered react apps",
+  "version": "1.0.0",
+  "description": "Hapi plugin for itsa-react-server",
   "author": "",
   "repository": {
     "type": "git",
-    "url": "https://github.com/itsa-server/itsa-react-server"
+    "url": "git+https://github.com/itsa-server/itsa-react-server.git"
   },
   "bugs": {
     "url": "https://github.com/itsa-server/itsa-react-server/issues"
@@ -13,33 +13,29 @@
   "keywords": [
     "itsa",
     "itsasbreuk",
-    "itsa-server",
-    "server"
+    "hapi",
+    "itsa-react-server",
+    "plugin",
+    "react"
   ],
-  "main": "server.js",
+  "main": "./lib/plugin.js",
+  "directories": {
+      "lib": "./lib"
+  },
   "engines": {
     "node": "*"
   },
   "dependencies": {
-    "fs-extra": "^0.18.3",
-    "fs-promise": "^0.3.1",
-    "good": "^5.1.2",
-    "good-console": "^4.1.0",
-    "handlebars": "^3.0.3",
-    "hapi-sass": "^1.0.0",
-    "inline-script-css": "itsa-server/inline-script-css",
-    "js-ext": "itsa/js-ext",
-    "path": "^0.11.14",
-    "request": "^2.55.0",
-    "stream": "0.0.2",
-    "file-upload-handler": "itsa-server/file-upload-handler",
-    "suppress-logging": "itsa-server/suppress-logging",
-    "uglify-js": "^2.4.23",
-    "utils": "itsa/utils"
+    "inert": "^3.1.0",
+    "react": "^0.13.3",
+    "require-reload": "^0.2.2",
+    "itsa-react-fs-markdown": "^1.0.0",
+    "itsa-react-router": "^1.0.0",
+    "itsa-reflux-clientstorage": "^1.0.0",
+    "vision": "^3.0.0"
   },
   "devDependencies": {
     "chai": "^1.9.1",
-    "eslint-plugin-react": "^3.5.1",
     "istanbul": "^0.3.0",
     "jshint": "^2.5.5",
     "mocha": "^1.21.4"
@@ -47,10 +43,9 @@
   "scripts": {
     "pretest": "jshint  ./lib/*.js",
     "test": "mocha tests/*.js  && istanbul cover $(which _mocha) -- tests/*.js",
-    "lint": "jshint ./lib/*.js",
-    "start": "node server.js"
+    "lint": "jshint ./lib/*.js"
   },
-  "homepage": "http://itsa.github.io",
+  "homepage": "http://itsaserver.io",
   "maintainers": [
     {
       "name": "Marco Asbreuk",
