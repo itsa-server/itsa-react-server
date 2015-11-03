@@ -29,9 +29,7 @@
     "inert": "^3.1.0",
     "react": "^0.13.3",
     "require-reload": "^0.2.2",
-    "itsa-react-fs-markdown": "^1.0.0",
-    "itsa-react-router": "^1.0.0",
-    "itsa-reflux-clientstorage": "^1.0.0",
+    "object-assign": "^4.0.1",
     "vision": "^3.0.0"
   },
   "devDependencies": {
