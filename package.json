@@ -1,6 +1,6 @@
 {
   "name": "itsa-react-server",
-  "version": "1.0.8",
+  "version": "1.2.1",
   "description": "Hapi plugin for itsa-react-server",
   "author": "",
   "repository": {
@@ -27,7 +27,8 @@
   },
   "dependencies": {
     "inert": "^3.1.0",
-    "react": "^0.13.3",
+    "react": "^0.14.2",
+    "react-dom": "^0.14.2",
     "require-reload": "^0.2.2",
     "object-assign": "^4.0.1",
     "vision": "^3.0.0"
