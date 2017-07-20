@@ -1,0 +1,184 @@
+{
+    "port": 3001,
+    "socketServer": {
+        "enabled": true,
+        "port": 4001,
+        "proxy-port": 4002
+    },
+    "debug": false,
+    "gracefullyShutDown": 10,
+    "pageNotFoundView": "not-found",
+    "showOffline": false,
+    "ddos-prevention": {
+        "enabled": false,
+        "maxItemsOnPage": 150,
+        "testmode": false,
+        "silent": true,
+        "silentStart": true
+    },
+    "app-authentication": {
+        "enabled": false,
+        "onlySsl": true,
+        "session-cookie": false,
+        "ttl-sec": 1800,
+        "loginView": "login",
+        "strategies": [
+            {
+                "strategy": "general"
+            }
+        ]
+    },
+    "cookies": {
+        "body-data-attr": {
+            "enabled": false,
+            "onlySsl": false,
+            "ttl-sec": 31536000
+        },
+        "not-exposed": {
+            "enabled": false,
+            "onlySsl": false,
+            "ttl-sec": 31536000
+        },
+        "props": {
+            "enabled": false,
+            "onlySsl": false,
+            "ttl-sec": 31536000
+        }
+    },
+    "client-props": {
+    },
+    "url-loader-limit": "1",
+    "external-modules": [
+        {
+            "module": "react",
+            "ref": "React",
+            "file": "react/dist/react.min.js"
+        },
+        {
+            "module": "react-dom",
+            "ref": "ReactDOM",
+            "file": "react-dom/dist/react-dom.min.js"
+        },
+        {
+            "module": "react-dom/server",
+            "ref": "ReactDOMServer",
+            "file": "react-dom/dist/react-dom-server.min.js"
+        }
+    ],
+    "static-components-dir": [
+    ],
+    "cdn": {
+        "enabled": false,
+        "cleanupPrevious": false,
+        "url": "",
+        "apiVersion": "",
+        "accessKeyId": "",
+        "secretAccessKey": "",
+        "bucket": ""
+    },
+    "babel-polyfill": true,
+    "service-workers": {
+        "enabled": true,
+        "cacheAuthenticatedCode": true
+    },
+    "inline-pagecss": true,
+    "page-description": "my awesome page",
+    "google-analytics": "",
+    "meta-viewport": {
+        "desktop": "width=device-width, initial-scale=1.0",
+        "phone": "user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0, minimal-ui",
+        "tablet": "user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0, minimal-ui"
+    },
+    "languages": {
+        "en": "default"
+    },
+    "environments": {
+        "local": {
+            "device": "",
+            "socketServer": {
+                "port": 4001,
+                "proxy-port": 4001
+            },
+            "service-workers": {
+                "enabled": false
+            },
+            "app-authentication": {
+                "onlySsl": false
+            },
+            "cookies": {
+                "body-data-attr": {
+                    "onlySsl": false
+                },
+                "not-exposed": {
+                    "onlySsl": false
+                },
+                "props": {
+                    "onlySsl": false
+                }
+            },
+            "external-modules": [
+                {
+                    "module": "react",
+                    "ref": "React",
+                    "file": "react/dist/react.js"
+                },
+                {
+                    "module": "react-dom",
+                    "ref": "ReactDOM",
+                    "file": "react-dom/dist/react-dom.js"
+                },
+                {
+                    "module": "react-dom/server",
+                    "ref": "ReactDOMServer",
+                    "file": "react-dom/dist/react-dom-server.js"
+                }
+            ]
+        },
+        "test": {
+            "socketServer": {
+                "port": 4001,
+                "proxy-port": 4001
+            },
+            "service-workers": {
+                "enabled": false
+            },
+            "app-authentication": {
+                "onlySsl": false
+            },
+            "cookies": {
+                "body-data-attr": {
+                    "onlySsl": false
+                },
+                "not-exposed": {
+                    "onlySsl": false
+                },
+                "props": {
+                    "onlySsl": false
+                }
+            }
+        },
+        "development": {
+            "debug": true,
+            "service-workers": {
+                "enabled": true
+            },
+            "external-modules": [
+                {
+                    "module": "react",
+                    "ref": "React",
+                    "file": "react/dist/react.js"
+                },
+                {
+                    "module": "react-dom",
+                    "ref": "ReactDOM",
+                    "file": "react-dom/dist/react-dom.js"
+                },
+                {
+                    "module": "react-dom/server",
+                    "ref": "ReactDOMServer",
+                    "file": "react-dom/dist/react-dom-server.js"
+                }
+            ]
+        }
+    }
+}
