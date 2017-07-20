@@ -1,6 +1,6 @@
 {
   "name": "itsa-react-server",
-  "version": "16.2.8",
+  "version": "16.2.9",
   "description": "itsa-react-server Hapi plugin",
   "author": "",
   "repository": {
@@ -16,7 +16,10 @@
     "hapi",
     "itsa-react-server",
     "plugin",
-    "react"
+    "react",
+    "mvc",
+    "framework",
+    "boilerplate"
   ],
   "main": "./lib/hapi-plugin/plugin.js",
   "directories": {
