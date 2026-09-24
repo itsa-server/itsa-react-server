@@ -13,7 +13,8 @@
 ## Global Constraints
 
 - Package version `18.0.0`; `peerDependencies`: `"@hapi/hapi": "^21"`; `engines.node`: `">=14"`.
-- Dependencies replaced: `inert` → `@hapi/inert ^7`, `vision` → `@hapi/vision ^7`, `boom` → `@hapi/boom ^10`, `hoek` → `@hapi/hoek ^11`. No other dependency changes. `devDependencies`: `@hapi/hapi ^21`.
+- Dependencies replaced: `inert` → `@hapi/inert ^7`, `vision` → `@hapi/vision ^7`, `boom` → `@hapi/boom ^10`, `hoek` → `@hapi/hoek ^11`; `react` and `react-dom` → `^16.14.0` (spec §11, Task 2b). No other dependency changes. `devDependencies`: `@hapi/hapi ^21`.
+- From Task 2b on, `npm install` must succeed **without** `--legacy-peer-deps`; never pass that flag or `--force`.
 - `scripts.test`: `node --test --test-force-exit "tests/*.test.js"` (the plugin starts interval timers that never stop; `--test-force-exit` ends each test process after its tests finish).
 - Plugin identity: `name: 'itsa-react-server'`, `version` from this repo's `package.json`.
 - Cookies are registered with `isSameSite: 'Lax'`.
@@ -1730,6 +1731,193 @@ git add package.json package-lock.json lib tests docs/superpowers/plans/2026-09-
 git commit -m "CHANGED: plugin registers on hapi 21 (@hapi/hapi, inert 7, vision 7)
 
 Co-Authored-By: Claude Opus 5.5 (1M context) <noreply@anthropic.com>"
+```
+
+---
+
+### Task 2b: React 16 (added 2026-09-25, spec §11)
+
+A plain `npm install` fails (ERESOLVE): `itsa-react-globalstate` requires `react >= 16`, the package pins React 15. Task 2 therefore installed with `--legacy-peer-deps`. This task steps React up one major version, regenerates the lockfile with a plain install, and proves server rendering is unchanged.
+
+**Files:**
+- Create: `tests/parity/render-samples.js`, `tests/parity/record-react15-render.js`, `tests/fixtures/react15-render.json` (generated), `tests/react-render.test.js`
+- Modify: `package.json`, `package-lock.json`, `lib/hapi-plugin/helpers/jsx-view.js`, `lib/default-manifest.json`
+
+**Interfaces:**
+- Consumes: fixture views `tests/fixtures/app/build/view_components/*.js` and `tests/helpers/fixture.js` (Task 1).
+- Produces: `jsx-view.js` keeps its export `{View: {compile(template, compileOpts) → (context, renderOpts) → html}, clearCache()}`; `renderOpts.filename` is the view file.
+
+- [ ] **Step 1: Create the render samples**
+
+`tests/parity/render-samples.js`:
+
+```js
+'use strict';
+
+// Props rendered through lib/hapi-plugin/helpers/jsx-view.js on React 15 (recorded) and React 16 (test).
+// `escaping` holds every character React escapes, so an escaping change shows up.
+
+module.exports = {
+    index: {
+        view: 'index',
+        props: {
+            __appProps: {view: 'index', lang: 'en', langprefix: '', locales: ['en'], path: '/', uri: '/?x=1', device: 'desktop', title: 'Home'},
+            __bodyDataAttr: {'data-theme': 'dark'},
+            authentication: true,
+            fromModel: 42,
+            general: 'yes'
+        }
+    },
+    escaping: {
+        view: 'login',
+        props: {
+            __appProps: {view: 'login', lang: 'nl', title: 'Log <in> & "go" \'now\''},
+            __bodyDataAttr: {},
+            authentication: false,
+            authenticationMsg: 'Tom\'s <b>"quoted"</b> & more'
+        }
+    }
+};
+```
+
+- [ ] **Step 2: Record the React 15 rendering (before any upgrade)**
+
+`tests/parity/record-react15-render.js`:
+
+```js
+'use strict';
+
+// One-off, run while React 15 is installed:  node tests/parity/record-react15-render.js
+// Renders the samples through jsx-view and writes tests/fixtures/react15-render.json.
+
+const fs = require('fs'),
+    path = require('path'),
+    fixture = require('../helpers/fixture'),
+    SAMPLES = require('./render-samples'),
+    View = require(path.join(fixture.REPO, 'lib', 'hapi-plugin', 'helpers', 'jsx-view')).View,
+    OUT = path.join(fixture.REPO, 'tests', 'fixtures', 'react15-render.json'),
+    rendered = {};
+
+console.log('react', require('react/package.json').version);
+Object.keys(SAMPLES).forEach(name => {
+    const filename = path.join(fixture.FIXTURE_APP, 'build', 'view_components', SAMPLES[name].view+'.js');
+    rendered[name] = View.compile('', {})(SAMPLES[name].props, {filename});
+});
+fs.writeFileSync(OUT, JSON.stringify(rendered, null, 2)+'\n');
+console.log('recorded', OUT);
+```
+
+Run: `node tests/parity/record-react15-render.js`
+Expected: prints `react 15.6.2` and `recorded .../tests/fixtures/react15-render.json`. Open the JSON: `index` starts with `<!DOCTYPE html><html><body><h1>index</h1>`; `escaping` contains `&lt;` / `&amp;` / `&quot;` / `&#x27;`.
+
+- [ ] **Step 3: Write the rendering test**
+
+`tests/react-render.test.js`:
+
+```js
+'use strict';
+
+const {test} = require('node:test'),
+    assert = require('node:assert'),
+    path = require('path'),
+    fixture = require('./helpers/fixture'),
+    SAMPLES = require('./parity/render-samples'),
+    recorded = require('./fixtures/react15-render.json'),
+    View = require(path.join(fixture.REPO, 'lib', 'hapi-plugin', 'helpers', 'jsx-view')).View;
+
+Object.keys(SAMPLES).forEach(name => {
+    test('jsx-view renders "'+name+'" exactly as React 15 did', () => {
+        const filename = path.join(fixture.FIXTURE_APP, 'build', 'view_components', SAMPLES[name].view+'.js');
+        assert.strictEqual(View.compile('', {})(SAMPLES[name].props, {filename}), recorded[name]);
+    });
+});
+```
+
+Run: `node --test --test-force-exit tests/react-render.test.js`
+Expected: PASS on React 15 (baseline sanity: the test reproduces the recording).
+
+- [ ] **Step 4: Upgrade React and reinstall without flags**
+
+In `package.json` `dependencies` set `"react": "^16.14.0"` and `"react-dom": "^16.14.0"`.
+
+Run: `npm install` (no `--legacy-peer-deps`, no `--force`).
+Expected: completes without ERESOLVE; `npm ls react react-dom` shows 16.14.x and no `invalid`/`UNMET PEER` lines; `npm ls @hapi/hapi` still shows 21.x.
+
+If the install fails because something requires a newer React than 16, change both to the next major (`^17.0.2`, then `^18.3.1`), re-run, and record in the report which package forced it. If it fails for any other reason, stop and report BLOCKED with the full npm error — do not force.
+
+- [ ] **Step 5: Run the rendering test on React 16**
+
+Run: `node --test --test-force-exit tests/react-render.test.js 2>&1 | tee /dev/stderr | grep -c "createFactory"`
+Expected: the tests PASS (identical HTML) and the count is **1 or more**: React 16.14 warns that `React.createFactory()` is deprecated (RED for the pristine-output rule). If the count is 0, note that in the report — Step 6 applies anyway (spec §11). If the HTML differs, stop and report it with both outputs — do not re-record the fixture.
+
+- [ ] **Step 6: Replace `React.createFactory` in `jsx-view.js`**
+
+In `lib/hapi-plugin/helpers/jsx-view.js` replace
+
+```js
+            if (!VIEW_CACHE[view]) {
+                // require(view) will invoke the code and set global.__viewComponent to the Component that the view should have specified
+                require(view);
+                VIEW_CACHE[view] = React.createFactory(global.__viewComponent);
+            }
+            output += ReactDOMServer[method](VIEW_CACHE[view](context));
+```
+
+with
+
+```js
+            if (!VIEW_CACHE[view]) {
+                // require(view) will invoke the code and set global.__viewComponent to the Component that the view should have specified
+                require(view);
+                VIEW_CACHE[view] = global.__viewComponent;
+            }
+            output += ReactDOMServer[method](React.createElement(VIEW_CACHE[view], context));
+```
+
+Run: `node --test --test-force-exit tests/react-render.test.js 2>&1 | grep -c "createFactory"`
+Expected: `0`, and the tests PASS.
+
+- [ ] **Step 7: Point the default manifest at React 16's `umd/` files**
+
+In `lib/default-manifest.json`, replace the `"file"` values of the React entries in all three `external-modules` lists:
+
+| list | `react` | `react-dom` | `react-dom/server` |
+|---|---|---|---|
+| top level (production) | `react/umd/react.production.min.js` | `react-dom/umd/react-dom.production.min.js` | `react-dom/umd/react-dom-server.browser.production.min.js` |
+| `environments.local` | `react/umd/react.development.js` | `react-dom/umd/react-dom.development.js` | `react-dom/umd/react-dom-server.browser.development.js` |
+| `environments.development` | `react/umd/react.development.js` | `react-dom/umd/react-dom.development.js` | `react-dom/umd/react-dom-server.browser.development.js` |
+
+Leave `"module"` and `"ref"` unchanged.
+
+Run:
+
+```bash
+node -e "
+const m = require('./lib/default-manifest.json'), fs = require('fs');
+const lists = [m['external-modules'], m.environments.local['external-modules'], m.environments.development['external-modules']];
+let bad = 0;
+lists.forEach(list => list.forEach(e => { if (!fs.existsSync('node_modules/' + e.file)) { bad++; console.log('MISSING', e.file); } }));
+console.log(bad ? bad + ' missing' : 'all React files exist');
+"
+grep -c "react/dist\|react-dom/dist" lib/default-manifest.json
+```
+
+Expected: `all React files exist`, then `0`.
+
+- [ ] **Step 8: Run the whole suite**
+
+Run: `npm test`
+Expected: PASS (startup tests and the rendering test), output without React deprecation warnings.
+
+- [ ] **Step 9: Lint gate and commit**
+
+Lint gate for `jsx-view.js` (baseline in the ledger). Add the ledger line (include the React version that made `npm install` succeed), then:
+
+```bash
+git add package.json package-lock.json lib/hapi-plugin/helpers/jsx-view.js lib/default-manifest.json tests docs/superpowers/plans/2026-09-24-hapi21-migration-ledger.md
+git commit -m "CHANGED: React 16 (plain npm install works again); jsx-view without createFactory
+
+Co-Authored-By: <the model you are> <noreply@anthropic.com>"
 ```
 
 ---
@@ -3731,6 +3919,36 @@ npm install @hapi/hapi@^21 itsa-react-server@^18
 If your app requires `boom`, `hoek`, `inert`, `vision` or `joi` itself, switch to `@hapi/boom`,
 `@hapi/hoek`, `@hapi/inert`, `@hapi/vision` and `joi`.
 
+### React 16
+
+itsa-react-server 18 uses React 16 (React 15 made `npm install` fail against
+`itsa-react-globalstate`, which needs React ≥ 16). Your app must use the same React:
+
+```bash
+npm install react@^16.14.0 react-dom@^16.14.0
+```
+
+React 16 has no `dist/` folder. If your `src/manifest.json` lists React under `external-modules`,
+replace the paths (the `module` and `ref` values stay the same):
+
+| React 15 (`file`) | React 16 (`file`) |
+|---|---|
+| `react/dist/react.min.js` | `react/umd/react.production.min.js` |
+| `react-dom/dist/react-dom.min.js` | `react-dom/umd/react-dom.production.min.js` |
+| `react-dom/dist/react-dom-server.min.js` | `react-dom/umd/react-dom-server.browser.production.min.js` |
+| `react/dist/react.js` | `react/umd/react.development.js` |
+| `react-dom/dist/react-dom.js` | `react-dom/umd/react-dom.development.js` |
+| `react-dom/dist/react-dom-server.js` | `react-dom/umd/react-dom-server.browser.development.js` |
+
+Component changes from React 15 to 16:
+- `React.PropTypes` is gone: use the `prop-types` package.
+- `React.createClass` is gone: use ES classes (or the `create-react-class` package).
+- `React.DOM.*` factories are gone: use `react-dom-factories` or JSX.
+- `componentWillMount`, `componentWillReceiveProps` and `componentWillUpdate` still work in 16
+  but are legacy (renamed `UNSAFE_*` in later versions).
+- In development the browser console may warn that `ReactDOM.render()` should be `hydrate()` for
+  server-rendered markup; the page still works.
+
 ## 2. server.js
 
 hapi 21 needs host and port when the server is created. `getServerOptions(manifest)` returns them
@@ -3905,11 +4123,47 @@ grep -rn "output: *'data'\|parse: *true" src --include=*.js             # upload
 
 - [ ] **Step 2: Link it from the README and bump the version**
 
-In `README.md`, directly under the first heading line, add:
+In `README.md`, directly above the `## Installation` heading, add the following section (spec §9). It is
+written for maintainers of apps built on itsa-react-server, such as website-heidata:
 
 ```markdown
-> **Upgrading from 17.x?** Version 18 runs on hapi 21 — see [MIGRATION-18.md](MIGRATION-18.md).
+## Upgrading to 18.0.0
+
+Version 18 moves from hapi 16 to **hapi 21** and from React 15 to **React 16**. It is a breaking
+release: every app built on itsa-react-server needs code changes. The full guide with before/after
+examples is [MIGRATION-18.md](MIGRATION-18.md); this is the checklist.
+
+**What your app needs**
+
+1. **Node.js 14 or later** (tested on Node 24).
+2. **Dependencies:** remove `hapi`; install `@hapi/hapi@^21`, `itsa-react-server@^18`,
+   `react@^16.14.0` and `react-dom@^16.14.0`. Replace `boom`/`hoek`/`inert`/`vision` with their
+   `@hapi/*` packages if your app uses them directly.
+3. **`src/manifest.json`:** replace `react/dist/...` and `react-dom/dist/...` paths in
+   `external-modules` with the React 16 `umd/` files (table in the guide).
+4. **`server.js`:** create the server with
+   `Hapi.server(Object.assign(reactServer.getServerOptions(manifest), {...your options}))`, then
+   `await server.register({plugin: reactServer, options: manifest})` and `await server.start()`.
+   No `server.connection()`, no callbacks.
+5. **Routes (`src/routes.js`):** every handler **returns** — `handler: (request, h) => h.reactview('index')`.
+   A handler without `return` answers 500.
+6. **`reply` becomes `h` everywhere:** route handlers, actions (`src/actions`), models
+   (`src/models`, `src/model-general.js`, `src/initial-globalstate.js`) and the authentication
+   `validateFunc`. `reply.reactview/action/assets/login/logout/generateProps/setBodyDataAttr`
+   become the same methods on `h`; `reply.request` becomes `h.request`.
+7. **Actions return their response:** `reply(stream).header(...)` becomes
+   `return h.response(stream).header(...)`; a returned value is sent as before.
+8. **React 15 → 16 component changes:** `React.PropTypes` and `React.createClass` are gone.
+9. **Check the behaviour changes:** cookies are sent with `SameSite=Lax`; `request.url` is a
+   WHATWG `URL` (use `pathname`/`search`); multipart uploads parsed by hapi need
+   `payload: {multipart: true}`; a failing plugin start now makes `server.register()` reject.
+
+**Security fix — upgrade soon.** Up to 17.x, an asset URL with an encoded `../`
+(for example `/assets/..%2F..%2F..%2F..%2F.cookierc`) can read any file of the app, including the
+cookie passwords in `.cookierc`. 18.0.0 confines every asset route to its own directory.
 ```
+
+Keep the README's existing content below this section unchanged.
 
 In `package.json` set `"version": "18.0.0"`, then run `npm install --package-lock-only`.
 
@@ -3922,7 +4176,7 @@ docs/
 
 - [ ] **Step 3: Verify**
 
-Run: `npm test` → PASS. Run: `npm pack --dry-run 2>&1 | grep -E "tests/|docs/" ; echo "exit $?"` → no lines listed, `exit 1`. Run: `node -p "require('./package.json').version"` → `18.0.0`.
+Run: `grep -c "^## Upgrading to 18.0.0" README.md` → `1`. Run: `npm test` → PASS. Run: `npm pack --dry-run 2>&1 | grep -E "tests/|docs/" ; echo "exit $?"` → no lines listed, `exit 1`. Run: `node -p "require('./package.json').version"` → `18.0.0`.
 
 - [ ] **Step 4: Commit**
 
@@ -3963,7 +4217,7 @@ git -C /Users/marco/Documents/Projects/itsa-cli status --short   # must be empty
 
 For `basic` and `auth` (in `$E2E/<t>`):
 1. Create `.cookierc` in the format itsa-cli writes (`module.exports = {'app-authentication': '…', 'body-data-attr': '…', 'not-exposed': '…', 'props': '…'}`, each value ≥ 32 characters).
-2. In `package.json` dependencies: remove `"hapi"`, add `"@hapi/hapi": "^21.4.10"`, set `"itsa-react-server": "file:../itsa-react-server-18.0.0.tgz"`.
+2. In `package.json` dependencies: remove `"hapi"`, add `"@hapi/hapi": "^21.4.10"`, set `"react"` and `"react-dom"` to `"^16.14.0"`, set `"itsa-react-server": "file:../itsa-react-server-18.0.0.tgz"`. Update the React `external-modules` paths in `src/manifest.json` per `MIGRATION-18.md`. The install must succeed without `--legacy-peer-deps`; if it does not, report the npm error.
 3. `npm install`.
 4. Migrate `server.js`, `src/routes.js` and every file `grep -rln reply src server.js` lists, **using only `MIGRATION-18.md`**. Note every place where the guide was unclear or incomplete.
 

@@ -16,8 +16,9 @@ a test suite, and a migration guide for consuming apps.
 
 **Out of scope:** `website-heidata` and the `itsa-cli` project templates
 (the maintainer migrates those, using the migration guide); the build,
-watch, webpack, CDN, gulp and client-side code; React, babel and webpack
-versions; publishing to npm; pushing or opening a PR.
+watch, webpack, CDN, gulp and client-side code; babel and webpack
+versions; React beyond the single step to 16 (§11); publishing to npm;
+pushing or opening a PR.
 
 **Success criteria**
 
@@ -38,7 +39,8 @@ versions; publishing to npm; pushing or opening a PR.
 - `engines.node`: `">=14"`.
 - Dependencies replaced: `inert` → `@hapi/inert ^7`, `vision` →
   `@hapi/vision ^7`, `boom` → `@hapi/boom ^10`, `hoek` → `@hapi/hoek ^11`.
-  No other dependency changes.
+  `react` and `react-dom` → `^16.14.0` (§11). No other dependency changes.
+- `npm install` must succeed **without** `--legacy-peer-deps` (§11).
 - `devDependencies`: `@hapi/hapi ^21` (so tests can run); hapi 16 only as
   a temporary, uncommitted install for recording the parity snapshot (§8).
 - `scripts.test`: `node --test tests/`. `main` stays
@@ -391,8 +393,50 @@ a dependency.
 - search patterns to find every place to change: handlers without
   `return`, `reply(` calls, `reply.login`/`reply.logout`, `reply.request`,
   `request.url.path`, multipart payload routes, `new Hapi.Server`,
-  `server.register(` with a callback, `server.start(` with a callback.
+  `server.register(` with a callback, `server.start(` with a callback;
+- React 16 (§11): bump the app's own `react`/`react-dom`, replace
+  `react/dist/...` paths in the app manifest's `external-modules`, and the
+  React 15 → 16 component changes (`React.PropTypes`, `React.createClass`
+  removed; `componentWill*` legacy).
+
+`README.md` gets an "Upgrading to 18.0.0" section (added 2026-09-25 at the
+maintainer's request) that tells a consuming app such as website-heidata,
+in a short checklist, everything the upgrade takes — Node and
+`@hapi/hapi` versions, React 16, `server.js`, handlers must return,
+`reply` → `h` in actions/models/validate, manifest `external-modules`
+paths, the behaviour changes and the security fix — and links to
+`MIGRATION-18.md` for the before/after details.
 
 ## 10. Delivery
 - All work committed on `DEV-hapi21`; version bumped to `18.0.0`.
 - No npm publish, push or PR unless the maintainer asks.
+
+## 11. React 16 (added 2026-09-25, approved by the maintainer)
+
+Why: a plain `npm install` fails (ERESOLVE) because `itsa-react-globalstate`
+requires `react >= 16` while the package pins React 15. The maintainer asked
+to upgrade React one major step at a time until install works; React 16 is
+the first step and the only constraint found requires `>= 16`.
+
+- `react`, `react-dom` → `^16.14.0`. The lockfile is regenerated with a
+  plain `npm install`. If it still fails because something requires a newer
+  React, take the next major step (17, then 18) and record why; any other
+  failure is reported, not forced.
+- `lib/hapi-plugin/helpers/jsx-view.js`: `React.createFactory` (deprecated,
+  warns in 16.13+) → `React.createElement(Component, context)`; same output.
+- `lib/default-manifest.json` `external-modules`: React 16 has no `dist/`
+  folder. Replace the nine `react/dist/...` / `react-dom/dist/...` paths
+  with the 16 `umd/` files — production:
+  `react/umd/react.production.min.js`,
+  `react-dom/umd/react-dom.production.min.js`,
+  `react-dom/umd/react-dom-server.browser.production.min.js`; `local` and
+  `development`: `react/umd/react.development.js`,
+  `react-dom/umd/react-dom.development.js`,
+  `react-dom/umd/react-dom-server.browser.development.js`. Globals
+  (`React`, `ReactDOM`, `ReactDOMServer`) unchanged.
+- Not changed: `lib/client-controller.js` keeps `ReactDOM.render` (still
+  takes over server markup in 16; only a development-console warning).
+- Verification: the fixture views rendered through `jsx-view` produce
+  byte-identical HTML on React 15 (recorded before the upgrade) and React 16
+  (a committed test), and the startup tests still pass.
+
