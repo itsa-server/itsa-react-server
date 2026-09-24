@@ -1,0 +1,54 @@
+{
+    "port": 3001,
+    "socketServer": {
+        "enabled": false,
+        "port": 4791,
+        "proxy-port": 4791
+    },
+    "debug": false,
+    "pageNotFoundView": "not-found",
+    "showOffline": false,
+    "ddos-prevention": {
+        "enabled": false,
+        "maxItemsOnPage": 150,
+        "testmode": false,
+        "silent": true,
+        "silentStart": true
+    },
+    "app-authentication": {
+        "enabled": false
+    },
+    "cookies": {},
+    "client-props": {},
+    "external-modules": [],
+    "cdn": {
+        "enabled": false,
+        "cleanupPrevious": false,
+        "url": ""
+    },
+    "babel-polyfill": false,
+    "service-workers": {
+        "enabled": false,
+        "cacheAuthenticatedCode": true
+    },
+    "inline-pagecss": false,
+    "page-description": "fixture app",
+    "meta-viewport": {
+        "desktop": "width=device-width",
+        "phone": "width=device-width, user-scalable=no",
+        "tablet": "width=device-width, user-scalable=no"
+    },
+    "languages": {
+        "en": "default",
+        "nl": true
+    },
+    "environments": {
+        "test": {
+            "host": "127.0.0.1",
+            "port": 3999
+        },
+        "production": {
+            "port": 8080
+        }
+    }
+}

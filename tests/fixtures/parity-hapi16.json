@@ -1,0 +1,943 @@
+{
+  "plain": {
+    "page-root": {
+      "status": 200,
+      "contentType": "text/html; charset=utf-8",
+      "noAuth": null,
+      "etag": null,
+      "cookies": [],
+      "body": {
+        "sha256": "217ac030279d29125bf35c4c40b6f0dbedcd54c653e521cfbaa0359ccc6b2aef",
+        "preview": "<!DOCTYPE html><html><body><h1>index</h1><pre id=\"props\">{&quot;view&quot;:&quot;index&quot;,&quot;appView&quot;:&quot;i"
+      }
+    },
+    "page-root-query": {
+      "status": 200,
+      "contentType": "text/html; charset=utf-8",
+      "noAuth": null,
+      "etag": null,
+      "cookies": [],
+      "body": {
+        "sha256": "c41c30e58501bac571e3319b5f5a8d1688afb6fa777f8deb4da28e092b194680",
+        "preview": "<!DOCTYPE html><html><body><h1>index</h1><pre id=\"props\">{&quot;view&quot;:&quot;index&quot;,&quot;appView&quot;:&quot;i"
+      }
+    },
+    "page-lang-url": {
+      "status": 200,
+      "contentType": "text/html; charset=utf-8",
+      "noAuth": null,
+      "etag": null,
+      "cookies": [],
+      "body": {
+        "sha256": "090048a7ce9512289a1676c21de6f97dc50e2f02c90d866a36435c9170e20fe4",
+        "preview": "<!DOCTYPE html><html><body><h1>index</h1><pre id=\"props\">{&quot;view&quot;:&quot;index&quot;,&quot;appView&quot;:&quot;i"
+      }
+    },
+    "page-lang-url-no-slash": {
+      "status": 200,
+      "contentType": "text/html; charset=utf-8",
+      "noAuth": null,
+      "etag": null,
+      "cookies": [],
+      "body": {
+        "sha256": "090048a7ce9512289a1676c21de6f97dc50e2f02c90d866a36435c9170e20fe4",
+        "preview": "<!DOCTYPE html><html><body><h1>index</h1><pre id=\"props\">{&quot;view&quot;:&quot;index&quot;,&quot;appView&quot;:&quot;i"
+      }
+    },
+    "page-accept-language": {
+      "status": 200,
+      "contentType": "text/html; charset=utf-8",
+      "noAuth": null,
+      "etag": null,
+      "cookies": [],
+      "body": {
+        "sha256": "867bd19c01d9a151b67698f48d105b977a538614580674b1d79a3862ddca1828",
+        "preview": "<!DOCTYPE html><html><body><h1>index</h1><pre id=\"props\">{&quot;view&quot;:&quot;index&quot;,&quot;appView&quot;:&quot;i"
+      }
+    },
+    "page-phone": {
+      "status": 200,
+      "contentType": "text/html; charset=utf-8",
+      "noAuth": null,
+      "etag": null,
+      "cookies": [],
+      "body": {
+        "sha256": "2cf53a4ba9f5c5a0ed16a955d0f60efe3c542a5583e1a1ce760c845fb38c6db8",
+        "preview": "<!DOCTYPE html><html><body><h1>index@phone</h1><pre id=\"props\">{&quot;view&quot;:&quot;index@phone&quot;,&quot;appView&q"
+      }
+    },
+    "page-bodydata": {
+      "status": 200,
+      "contentType": "text/html; charset=utf-8",
+      "noAuth": null,
+      "etag": null,
+      "cookies": [],
+      "body": {
+        "sha256": "0154beab98763afd9d597ff977f0d47746b155d86e17ca7d7f14115ac1ce094a",
+        "preview": "<!DOCTYPE html><html><body><h1>index</h1><pre id=\"props\">{&quot;view&quot;:&quot;index&quot;,&quot;appView&quot;:&quot;i"
+      }
+    },
+    "page-missing-view": {
+      "status": 404,
+      "contentType": "text/html; charset=utf-8",
+      "noAuth": null,
+      "etag": "\"c8abd6cf2de3fbfab2a089247da603092ca316f6\"",
+      "cookies": [],
+      "body": {
+        "sha256": "9747fb192787d73704a8dd725737066d0be8414e87c51f697b2aadaad308e38b",
+        "preview": "<html><body>fixture 404</body></html>"
+      }
+    },
+    "page-not-found-html": {
+      "status": 200,
+      "contentType": "text/html; charset=utf-8",
+      "noAuth": null,
+      "etag": null,
+      "cookies": [],
+      "body": {
+        "sha256": "43b7ec4d582f25644eff0369efb087b57dc97aca606ff208f185ca73b5d97efa",
+        "preview": "<!DOCTYPE html><html><body><h1>not-found</h1><pre id=\"props\">{&quot;view&quot;:&quot;not-found&quot;,&quot;appView&quot;"
+      }
+    },
+    "page-not-found-asset": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "noAuth": null,
+      "etag": null,
+      "cookies": [],
+      "body": {
+        "sha256": "9238e24465d1170d646dc13f606fbbdca3f5edeed0c38a925928aeb0f9c5f7ed",
+        "preview": "{\"error\":\"Not Found\",\"message\":\"Not Found\",\"statusCode\":404}"
+      }
+    },
+    "ajax-props": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "noAuth": null,
+      "etag": null,
+      "cookies": [],
+      "body": {
+        "sha256": "cd7a3791b678a12afa0957a1974eead35767e04ac41a1e8e1139b21a4b1c9c80",
+        "preview": "{\"__appProps\":{\"assetsdir\":\"/assets/1.0.0/\",\"charset\":\"utf-8\",\"clientConfig\":{},\"description\":\"fixture app\",\"device\":\"de"
+      }
+    },
+    "ajax-props-lang": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "noAuth": null,
+      "etag": null,
+      "cookies": [],
+      "body": {
+        "sha256": "83dab0fc77255ff65aa0566f3ef5f7796f34f6bf902da8fe232fddd5b924d536",
+        "preview": "{\"__appProps\":{\"assetsdir\":\"/assets/1.0.0/\",\"charset\":\"utf-8\",\"clientConfig\":{},\"description\":\"fixture app\",\"device\":\"de"
+      }
+    },
+    "ajax-comp": {
+      "status": 200,
+      "contentType": "text/html; charset=utf-8",
+      "noAuth": null,
+      "etag": "\"aaa111\"",
+      "cookies": [],
+      "body": {
+        "sha256": "4ea8347b60220e02d3b7ce7abf150d7f44a02f05b4dfb65de666fd075fe67612",
+        "preview": "for(;;);window.itsaView='index';"
+      }
+    },
+    "ajax-css": {
+      "status": 200,
+      "contentType": "text/html; charset=utf-8",
+      "noAuth": null,
+      "etag": "\"aaa111.css\"",
+      "cookies": [],
+      "body": {
+        "sha256": "fc3f3058cad648e8de0ff2b82077a9bd1bc98cfc6a25ba2e081dea6ea9816aa6",
+        "preview": "h1{color:red}"
+      }
+    },
+    "ajax-comp-missing-view": {
+      "status": 404,
+      "contentType": "text/html; charset=utf-8",
+      "noAuth": null,
+      "etag": null,
+      "cookies": [],
+      "body": {
+        "sha256": "affcf4c8d293c17fcb845deb7f4bb1aff6697426d75bf28a2bf7403067646673",
+        "preview": "file not found"
+      }
+    },
+    "generated-props": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "noAuth": null,
+      "etag": null,
+      "cookies": [],
+      "body": {
+        "sha256": "9353a8c55e7e2fdd112247af8fbe10f4b07d9a5ffbfd3b52af10c97368e650c7",
+        "preview": "{\"authentication\":true,\"fromModel\":42,\"general\":\"yes\",\"view\":\"index\"}"
+      }
+    },
+    "asset-helper": {
+      "status": 200,
+      "contentType": "text/plain; charset=utf-8",
+      "noAuth": null,
+      "etag": "\"7c233f9a907fb830e5601c911c2169f947e6379d\"",
+      "cookies": [],
+      "body": {
+        "sha256": "2d5eebd03955939c6aa7ad07292cc6e13934da502e92581ac55fa20c6986c7fb",
+        "preview": "hello asset"
+      }
+    },
+    "act-value": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "noAuth": null,
+      "etag": null,
+      "cookies": [],
+      "body": {
+        "sha256": "48bb3f56eca3836a5ae58d5c96a52173db68505e7cc58477e2c004745c29f502",
+        "preview": "{\"hello\":\"world\",\"language\":\"en\"}"
+      }
+    },
+    "act-value-lang": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "noAuth": null,
+      "etag": null,
+      "cookies": [],
+      "body": {
+        "sha256": "350c18f8b39ffcaead782b57514caa70e34ead70d996aa2336be70d89c3b759f",
+        "preview": "{\"hello\":\"world\",\"language\":\"nl\"}"
+      }
+    },
+    "act-value-x-lang": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "noAuth": null,
+      "etag": null,
+      "cookies": [],
+      "body": {
+        "sha256": "350c18f8b39ffcaead782b57514caa70e34ead70d996aa2336be70d89c3b759f",
+        "preview": "{\"hello\":\"world\",\"language\":\"nl\"}"
+      }
+    },
+    "act-empty": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "noAuth": null,
+      "etag": null,
+      "cookies": [],
+      "body": {
+        "sha256": "3d23d39a30bb7323f8ccfd64c52cf286138fba4f83e78f7edcf66703b7c23aaa",
+        "preview": "{\"status\":\"OK\"}"
+      }
+    },
+    "act-response": {
+      "status": 201,
+      "contentType": "application/json; charset=utf-8",
+      "noAuth": null,
+      "etag": null,
+      "cookies": [],
+      "body": {
+        "sha256": "56587cffbb30e338497c9114f74803a530a713ebe374b69fcfa8551ad8dad1e9",
+        "preview": "{\"created\":true}"
+      }
+    },
+    "act-stream": {
+      "status": 200,
+      "contentType": "text/plain; charset=utf-8",
+      "noAuth": null,
+      "etag": null,
+      "cookies": [],
+      "body": {
+        "sha256": "e3110f169583197b5181af4ecd52e91773c72eed82a06a772cc64455df9a9c48",
+        "preview": "chunk-1,chunk-2"
+      }
+    },
+    "act-boom": {
+      "status": 500,
+      "contentType": "application/json; charset=utf-8",
+      "noAuth": null,
+      "etag": null,
+      "cookies": [],
+      "body": {
+        "sha256": "2b34ead711481eca5804f5136bef37c96a39a8ccd921b1228a6e7a037db414d5",
+        "preview": "{\"error\":\"Internal Server Error\",\"message\":\"An internal server error occurred\",\"statusCode\":500}"
+      }
+    },
+    "act-throws": {
+      "status": 500,
+      "contentType": "application/json; charset=utf-8",
+      "noAuth": null,
+      "etag": null,
+      "cookies": [],
+      "body": {
+        "sha256": "2b34ead711481eca5804f5136bef37c96a39a8ccd921b1228a6e7a037db414d5",
+        "preview": "{\"error\":\"Internal Server Error\",\"message\":\"An internal server error occurred\",\"statusCode\":500}"
+      }
+    },
+    "act-missing": {
+      "status": 500,
+      "contentType": "application/json; charset=utf-8",
+      "noAuth": null,
+      "etag": null,
+      "cookies": [],
+      "body": {
+        "sha256": "2b34ead711481eca5804f5136bef37c96a39a8ccd921b1228a6e7a037db414d5",
+        "preview": "{\"error\":\"Internal Server Error\",\"message\":\"An internal server error occurred\",\"statusCode\":500}"
+      }
+    },
+    "act-not-a-function": {
+      "status": 500,
+      "contentType": "application/json; charset=utf-8",
+      "noAuth": null,
+      "etag": null,
+      "cookies": [],
+      "body": {
+        "sha256": "2b34ead711481eca5804f5136bef37c96a39a8ccd921b1228a6e7a037db414d5",
+        "preview": "{\"error\":\"Internal Server Error\",\"message\":\"An internal server error occurred\",\"statusCode\":500}"
+      }
+    },
+    "act-options": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "noAuth": null,
+      "etag": null,
+      "cookies": [],
+      "body": {
+        "sha256": "8c86352bf639c4dd9316d441a539ab061f8761c767a6382172401c10532147dc",
+        "preview": "{\"language\":\"en\",\"options\":{\"inline\":true}}"
+      }
+    },
+    "act-payload": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "noAuth": null,
+      "etag": null,
+      "cookies": [],
+      "body": {
+        "sha256": "e9f918e08f2e4f30e11d2eb19dfebfbd826c2e27b8de252aa104933859441102",
+        "preview": "{\"payload\":{\"a\":1}}"
+      }
+    },
+    "request-info": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "noAuth": null,
+      "etag": null,
+      "cookies": [],
+      "body": {
+        "sha256": "2cb890472a3687029952ed4aa899bc4f7067bc98876258696185d4199e4f3071",
+        "preview": "{\"affinity\":\"desktop\",\"ajaxtype\":null,\"language\":\"en\",\"languageSwitch\":false,\"locales\":[\"en\"],\"path\":\"/act/request-info\""
+      }
+    },
+    "request-info-lang": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "noAuth": null,
+      "etag": null,
+      "cookies": [],
+      "body": {
+        "sha256": "7ef1e39b036771045a4435a2b7f68adea67004e4ce8161f82b9da506b5ab0c55",
+        "preview": "{\"affinity\":\"desktop\",\"ajaxtype\":null,\"language\":\"nl\",\"languageSwitch\":true,\"locales\":[\"nl\"],\"path\":\"/act/request-info\","
+      }
+    },
+    "request-info-ajax": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "noAuth": null,
+      "etag": null,
+      "cookies": [],
+      "body": {
+        "sha256": "9d72c1b18f6efe641d3e767ac000a0b9085014ecab1d5bc83365a3e0a6b06d5b",
+        "preview": "{\"affinity\":\"desktop\",\"ajaxtype\":\"props\",\"language\":\"nl\",\"languageSwitch\":true,\"locales\":[\"nl\"],\"path\":\"/act/request-inf"
+      }
+    },
+    "favicon": {
+      "status": 200,
+      "contentType": "image/x-icon",
+      "noAuth": null,
+      "etag": "\"948d5e5213cd0ac50e48beade306303c5230e53b\"",
+      "cookies": [],
+      "body": {
+        "sha256": "bee7e9b52d709d5c75396349f67f3d9e08843e918026e1c210ea90f9029b037b",
+        "preview": "fixture-icon"
+      }
+    },
+    "asset-unversioned": {
+      "status": 200,
+      "contentType": "text/plain; charset=utf-8",
+      "noAuth": null,
+      "etag": "\"7c233f9a907fb830e5601c911c2169f947e6379d\"",
+      "cookies": [],
+      "body": {
+        "sha256": "2d5eebd03955939c6aa7ad07292cc6e13934da502e92581ac55fa20c6986c7fb",
+        "preview": "hello asset"
+      }
+    },
+    "asset-versioned": {
+      "status": 200,
+      "contentType": "text/plain; charset=utf-8",
+      "noAuth": null,
+      "etag": "\"7c233f9a907fb830e5601c911c2169f947e6379d\"",
+      "cookies": [],
+      "body": {
+        "sha256": "2d5eebd03955939c6aa7ad07292cc6e13934da502e92581ac55fa20c6986c7fb",
+        "preview": "hello asset"
+      }
+    },
+    "asset-deep": {
+      "status": 200,
+      "contentType": "text/plain; charset=utf-8",
+      "noAuth": null,
+      "etag": "\"c9cbf953006dcf28992c2ca77909b1a714f239b7\"",
+      "cookies": [],
+      "body": {
+        "sha256": "75b425b19dec993e59dd0ec03eaca5fc8acb23f5ed5ea730d46c36e23ce973f0",
+        "preview": "deep asset"
+      }
+    },
+    "asset-private": {
+      "status": 200,
+      "contentType": "text/plain; charset=utf-8",
+      "noAuth": null,
+      "etag": "\"6b3dd0851644ee78ac17cd576b344416c2e7810a\"",
+      "cookies": [],
+      "body": {
+        "sha256": "8da4ff339782abba067ea238d3cfbeb5228c55557239c0e1d1a902c983df7183",
+        "preview": "private asset"
+      }
+    },
+    "asset-local": {
+      "status": 200,
+      "contentType": "application/javascript; charset=utf-8",
+      "noAuth": null,
+      "etag": "\"b4f4dfd89800f29baa13a7929c70c7ac3a5f3f22\"",
+      "cookies": [],
+      "body": {
+        "sha256": "886d08bd49cee384deccdd598edadce338cd39e5e9249dd4d986a16ff31df60a",
+        "preview": "window.itsaView='index';"
+      }
+    },
+    "asset-external": {
+      "status": 200,
+      "contentType": "application/javascript; charset=utf-8",
+      "noAuth": null,
+      "etag": "\"9cc4c80f02396e5b68c732d22c3075f3d63f0660\"",
+      "cookies": [],
+      "body": {
+        "sha256": "e28be45df588754720a207387fbbccc510def1a92e551734a33931e6042ed26f",
+        "preview": "window.itsaExternal=true;"
+      }
+    },
+    "serviceworker-disabled": {
+      "status": 200,
+      "contentType": "application/javascript; charset=utf-8",
+      "noAuth": null,
+      "etag": null,
+      "cookies": [],
+      "body": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "preview": ""
+      }
+    }
+  },
+  "cookies": {
+    "cookie-define": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "noAuth": null,
+      "etag": null,
+      "cookies": [
+        {
+          "name": "itsa-props",
+          "empty": false,
+          "attributes": [
+            "httponly",
+            "max-age=31536000",
+            "path=/"
+          ],
+          "sameSite": "strict"
+        }
+      ],
+      "body": {
+        "sha256": "b23bdfc1e24ee2c833f9331914a9ec930661c738c7730a700d7c966a8364bb60",
+        "preview": "{\"__appProps\":{\"assetsdir\":\"/assets/1.0.0/\",\"bodyattrcookie\":{},\"charset\":\"utf-8\",\"clientConfig\":{},\"cookie\":{\"color\":\"b"
+      }
+    },
+    "cookie-read-after-define": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "noAuth": null,
+      "etag": null,
+      "cookies": [],
+      "body": {
+        "sha256": "407c5ef972deb1cb43a23577e0efd30d92c0a8937e5e679d65b0a881027227d5",
+        "preview": "{\"bodydata\":{},\"globalstate\":{},\"notexposed\":{},\"props\":{\"color\":\"blue\",\"size\":3}}"
+      }
+    },
+    "cookie-set": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "noAuth": null,
+      "etag": null,
+      "cookies": [
+        {
+          "name": "itsa-props",
+          "empty": false,
+          "attributes": [
+            "httponly",
+            "max-age=31536000",
+            "path=/"
+          ],
+          "sameSite": "strict"
+        }
+      ],
+      "body": {
+        "sha256": "f03df099bca80f1c451a1dcbbd7c173eb40959ec028ef866ee1cf8984c984c79",
+        "preview": "{\"__appProps\":{\"assetsdir\":\"/assets/1.0.0/\",\"bodyattrcookie\":{},\"charset\":\"utf-8\",\"clientConfig\":{},\"cookie\":{\"color\":\"b"
+      }
+    },
+    "cookie-read-after-set": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "noAuth": null,
+      "etag": null,
+      "cookies": [],
+      "body": {
+        "sha256": "ed3e827f90323a53dca504c1e7ac5629085173d175b964a6e2bbffae719a8a6f",
+        "preview": "{\"bodydata\":{},\"globalstate\":{},\"notexposed\":{},\"props\":{\"color\":\"blue\",\"size\":4}}"
+      }
+    },
+    "cookie-delete": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "noAuth": null,
+      "etag": null,
+      "cookies": [
+        {
+          "name": "itsa-props",
+          "empty": false,
+          "attributes": [
+            "httponly",
+            "max-age=31536000",
+            "path=/"
+          ],
+          "sameSite": "strict"
+        }
+      ],
+      "body": {
+        "sha256": "7b8243aa79d4f09a3ae4d864b32aff377e86d1480b7f339e8e3351e0b27f87bc",
+        "preview": "{\"__appProps\":{\"assetsdir\":\"/assets/1.0.0/\",\"bodyattrcookie\":{},\"charset\":\"utf-8\",\"clientConfig\":{},\"cookie\":{\"size\":4},"
+      }
+    },
+    "cookie-read-after-delete": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "noAuth": null,
+      "etag": null,
+      "cookies": [],
+      "body": {
+        "sha256": "47283c1aa77e284725e16f49b16bd7a5a57e2f057fefe3437d6122a259dc7df7",
+        "preview": "{\"bodydata\":{},\"globalstate\":{},\"notexposed\":{},\"props\":{\"size\":4}}"
+      }
+    },
+    "cookie-bodydata-define": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "noAuth": null,
+      "etag": null,
+      "cookies": [
+        {
+          "name": "itsa-bodydata",
+          "empty": false,
+          "attributes": [
+            "httponly",
+            "max-age=31536000",
+            "path=/"
+          ],
+          "sameSite": "strict"
+        }
+      ],
+      "body": {
+        "sha256": "cfb48eab545a9bcfe0768574e77f1884211cad2dcf0d70c85fba2ec60373cc39",
+        "preview": "{\"__appProps\":{\"assetsdir\":\"/assets/1.0.0/\",\"bodyattrcookie\":{\"zoom\":\"2\"},\"charset\":\"utf-8\",\"clientConfig\":{},\"cookie\":{"
+      }
+    },
+    "page-with-bodydata-cookie": {
+      "status": 200,
+      "contentType": "text/html; charset=utf-8",
+      "noAuth": null,
+      "etag": null,
+      "cookies": [],
+      "body": {
+        "sha256": "75367487eee0f7468ed6dc6eed78635b6731417e7ab5ad3488304dc62ca74ba8",
+        "preview": "<!DOCTYPE html><html><body><h1>index</h1><pre id=\"props\">{&quot;view&quot;:&quot;index&quot;,&quot;appView&quot;:&quot;i"
+      }
+    },
+    "page-with-bodydata-cookie-again": {
+      "status": 200,
+      "contentType": "text/html; charset=utf-8",
+      "noAuth": null,
+      "etag": null,
+      "cookies": [
+        {
+          "name": "itsa-bodydata",
+          "empty": false,
+          "attributes": [
+            "httponly",
+            "max-age=31536000",
+            "path=/"
+          ],
+          "sameSite": "strict"
+        }
+      ],
+      "body": {
+        "sha256": "75367487eee0f7468ed6dc6eed78635b6731417e7ab5ad3488304dc62ca74ba8",
+        "preview": "<!DOCTYPE html><html><body><h1>index</h1><pre id=\"props\">{&quot;view&quot;:&quot;index&quot;,&quot;appView&quot;:&quot;i"
+      }
+    },
+    "cookie-notexposed-action": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "noAuth": null,
+      "etag": null,
+      "cookies": [
+        {
+          "name": "itsa-notexposed",
+          "empty": false,
+          "attributes": [
+            "httponly",
+            "max-age=31536000",
+            "path=/"
+          ],
+          "sameSite": "strict"
+        }
+      ],
+      "body": {
+        "sha256": "41a5bfa6df4d7a71fc297e9dae94ece5ec0b1234de30bcf7ae05fa900881ac48",
+        "preview": "{\"status\":\"set\"}"
+      }
+    },
+    "cookie-read-notexposed": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "noAuth": null,
+      "etag": null,
+      "cookies": [],
+      "body": {
+        "sha256": "207af2f2e2b006af819d3deccff6b56a45596758f6a768c0ab5f2f9f1bd0cb71",
+        "preview": "{\"bodydata\":{},\"globalstate\":{},\"notexposed\":{\"secret\":\"value\"},\"props\":{}}"
+      }
+    },
+    "globalstate-cookie": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "noAuth": null,
+      "etag": null,
+      "cookies": [],
+      "body": {
+        "sha256": "b817de95b51e672a8648ef53290ed92ed581d4a5002c04b5887f6b928a6756a3",
+        "preview": "{\"bodydata\":{},\"globalstate\":{\"a\":1},\"notexposed\":{},\"props\":{}}"
+      }
+    },
+    "ajax-props-refresh": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "noAuth": null,
+      "etag": null,
+      "cookies": [
+        {
+          "name": "itsa-props",
+          "empty": false,
+          "attributes": [
+            "httponly",
+            "max-age=31536000",
+            "path=/"
+          ],
+          "sameSite": "strict"
+        }
+      ],
+      "body": {
+        "sha256": "b23bdfc1e24ee2c833f9331914a9ec930661c738c7730a700d7c966a8364bb60",
+        "preview": "{\"__appProps\":{\"assetsdir\":\"/assets/1.0.0/\",\"bodyattrcookie\":{},\"charset\":\"utf-8\",\"clientConfig\":{},\"cookie\":{\"color\":\"b"
+      }
+    },
+    "cookie-remove": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "noAuth": null,
+      "etag": null,
+      "cookies": [
+        {
+          "name": "itsa-props",
+          "empty": false,
+          "attributes": [
+            "httponly",
+            "max-age=31536000",
+            "path=/"
+          ],
+          "sameSite": "strict"
+        }
+      ],
+      "body": {
+        "sha256": "b23bdfc1e24ee2c833f9331914a9ec930661c738c7730a700d7c966a8364bb60",
+        "preview": "{\"__appProps\":{\"assetsdir\":\"/assets/1.0.0/\",\"bodyattrcookie\":{},\"charset\":\"utf-8\",\"clientConfig\":{},\"cookie\":{\"color\":\"b"
+      }
+    },
+    "cookie-ttl": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "noAuth": null,
+      "etag": null,
+      "cookies": [
+        {
+          "name": "itsa-props",
+          "empty": false,
+          "attributes": [
+            "httponly",
+            "max-age=0",
+            "path=/"
+          ],
+          "sameSite": "strict"
+        }
+      ],
+      "body": {
+        "sha256": "b23bdfc1e24ee2c833f9331914a9ec930661c738c7730a700d7c966a8364bb60",
+        "preview": "{\"__appProps\":{\"assetsdir\":\"/assets/1.0.0/\",\"bodyattrcookie\":{},\"charset\":\"utf-8\",\"clientConfig\":{},\"cookie\":{\"color\":\"b"
+      }
+    }
+  },
+  "auth": {
+    "auth-public": {
+      "status": 200,
+      "contentType": "text/html; charset=utf-8",
+      "noAuth": null,
+      "etag": null,
+      "cookies": [],
+      "body": {
+        "sha256": "3273d5be47091797a6f837efa74538afa198f5e630ac6e52ce519d4f5729ccdf",
+        "preview": "<!DOCTYPE html><html><body><h1>index</h1><pre id=\"props\">{&quot;view&quot;:&quot;index&quot;,&quot;appView&quot;:&quot;i"
+      }
+    },
+    "auth-private-anonymous": {
+      "status": 200,
+      "contentType": "text/html; charset=utf-8",
+      "noAuth": "true",
+      "etag": null,
+      "cookies": [],
+      "body": {
+        "sha256": "b86a021b526695f41c4f1545f84ddf9738cc4544bfcac5d6a8767eb132ff0592",
+        "preview": "<!DOCTYPE html><html><body><h1>login</h1><pre id=\"props\">{&quot;view&quot;:&quot;login&quot;,&quot;appView&quot;:&quot;l"
+      }
+    },
+    "auth-private-anonymous-ajax": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "noAuth": "true",
+      "etag": null,
+      "cookies": [],
+      "body": {
+        "sha256": "e20990580f580948bdcce1939acf2be7a76953f653a36cddd6f36f64bfca723a",
+        "preview": "{\"__appProps\":{\"assetsdir\":\"/assets/1.0.0/\",\"charset\":\"utf-8\",\"clientConfig\":{},\"description\":\"fixture app\",\"device\":\"de"
+      }
+    },
+    "auth-legacy-config-anonymous": {
+      "status": 200,
+      "contentType": "text/html; charset=utf-8",
+      "noAuth": "true",
+      "etag": null,
+      "cookies": [],
+      "body": {
+        "sha256": "1337f8c6d8359e7a97411c37ea39f08c53ce08d12d23e37d739e375c87122e8b",
+        "preview": "<!DOCTYPE html><html><body><h1>login</h1><pre id=\"props\">{&quot;view&quot;:&quot;login&quot;,&quot;appView&quot;:&quot;l"
+      }
+    },
+    "auth-client-routes": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "noAuth": null,
+      "etag": null,
+      "cookies": [],
+      "body": {
+        "sha256": "f418190fff7d718086daed582b780c3733725c7a3ffca9ea4b1aea801bea0913",
+        "preview": "{\"__appProps\":{\"assetsdir\":\"/assets/1.0.0/\",\"charset\":\"utf-8\",\"clientConfig\":{},\"description\":\"fixture app\",\"device\":\"de"
+      }
+    },
+    "auth-login-user": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "noAuth": null,
+      "etag": null,
+      "cookies": [
+        {
+          "name": "itsa-id",
+          "empty": false,
+          "attributes": [
+            "httponly",
+            "max-age=1800",
+            "path=/"
+          ],
+          "sameSite": "strict"
+        }
+      ],
+      "body": {
+        "sha256": "140e8049d33324f537f7334de5c0bc7248de69faaa12bb0895aa8f4806b9475a",
+        "preview": "{\"status\":\"loggedin\"}"
+      }
+    },
+    "auth-private-user": {
+      "status": 200,
+      "contentType": "text/html; charset=utf-8",
+      "noAuth": null,
+      "etag": null,
+      "cookies": [],
+      "body": {
+        "sha256": "e2594bdbd5bc44415735352435f506becab55ee2ac33598754fb87709d9f7c35",
+        "preview": "<!DOCTYPE html><html><body><h1>private</h1><pre id=\"props\">{&quot;view&quot;:&quot;private&quot;,&quot;appView&quot;:&qu"
+      }
+    },
+    "auth-private-user-again": {
+      "status": 200,
+      "contentType": "text/html; charset=utf-8",
+      "noAuth": null,
+      "etag": null,
+      "cookies": [
+        {
+          "name": "itsa-id",
+          "empty": false,
+          "attributes": [
+            "httponly",
+            "max-age=1800",
+            "path=/"
+          ],
+          "sameSite": "strict"
+        }
+      ],
+      "body": {
+        "sha256": "46a4b2324e5bd2716310b4270040369a8bb231bfabfe9054e07aea5fddd2bdd8",
+        "preview": "<!DOCTYPE html><html><body><h1>private</h1><pre id=\"props\">{&quot;view&quot;:&quot;private&quot;,&quot;appView&quot;:&qu"
+      }
+    },
+    "auth-admin-user": {
+      "status": 200,
+      "contentType": "text/html; charset=utf-8",
+      "noAuth": "true",
+      "etag": null,
+      "cookies": [
+        {
+          "name": "itsa-id",
+          "empty": false,
+          "attributes": [
+            "httponly",
+            "max-age=1800",
+            "path=/"
+          ],
+          "sameSite": "strict"
+        }
+      ],
+      "body": {
+        "sha256": "263c2255987948cbae272723f043780e5f47f22626b322602ae2ff9e46eb75c3",
+        "preview": "<!DOCTYPE html><html><body><h1>login</h1><pre id=\"props\">{&quot;view&quot;:&quot;login&quot;,&quot;appView&quot;:&quot;l"
+      }
+    },
+    "auth-login-blocked": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "noAuth": null,
+      "etag": null,
+      "cookies": [
+        {
+          "name": "itsa-id",
+          "empty": false,
+          "attributes": [
+            "httponly",
+            "max-age=1800",
+            "path=/"
+          ],
+          "sameSite": "strict"
+        }
+      ],
+      "body": {
+        "sha256": "140e8049d33324f537f7334de5c0bc7248de69faaa12bb0895aa8f4806b9475a",
+        "preview": "{\"status\":\"loggedin\"}"
+      }
+    },
+    "auth-private-blocked": {
+      "status": 200,
+      "contentType": "text/html; charset=utf-8",
+      "noAuth": "true",
+      "etag": null,
+      "cookies": [
+        {
+          "name": "itsa-id",
+          "empty": false,
+          "attributes": [
+            "httponly",
+            "max-age=1800",
+            "path=/"
+          ],
+          "sameSite": "strict"
+        }
+      ],
+      "body": {
+        "sha256": "f59552dfd1bb11c896311241c9e77ff7fee67dd2bdc8fbf2edd842d37bb30899",
+        "preview": "<!DOCTYPE html><html><body><h1>login</h1><pre id=\"props\">{&quot;view&quot;:&quot;login&quot;,&quot;appView&quot;:&quot;l"
+      }
+    },
+    "auth-logout": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "noAuth": null,
+      "etag": null,
+      "cookies": [
+        {
+          "name": "itsa-id",
+          "empty": true,
+          "attributes": [
+            "httponly",
+            "max-age=0",
+            "path=/"
+          ],
+          "sameSite": "strict"
+        }
+      ],
+      "body": {
+        "sha256": "134c18168add9ee094d3ea0ea06647145f671f0591142b0a26c2aa2193698d35",
+        "preview": "{\"status\":\"loggedout\"}"
+      }
+    },
+    "auth-validate-logout": {
+      "status": 200,
+      "contentType": "text/html; charset=utf-8",
+      "noAuth": "true",
+      "etag": null,
+      "cookies": [
+        {
+          "name": "itsa-id",
+          "empty": false,
+          "attributes": [
+            "httponly",
+            "max-age=1800",
+            "path=/"
+          ],
+          "sameSite": "strict"
+        }
+      ],
+      "body": {
+        "sha256": "defff09b1cfc92e6ca9c3f3df69d0509883daf50a02ff24f7f40dbc8096a6eb7",
+        "preview": "<!DOCTYPE html><html><body><h1>login</h1><pre id=\"props\">{&quot;view&quot;:&quot;login&quot;,&quot;appView&quot;:&quot;l"
+      }
+    },
+    "auth-serviceworker-init": {
+      "status": 200,
+      "contentType": "text/html; charset=utf-8",
+      "noAuth": null,
+      "etag": null,
+      "cookies": [],
+      "body": {
+        "sha256": "f7f69f3930b9422ace1a74198631691a53d3bbf4d9001f4ba9d798b8627f9be9",
+        "preview": "<!DOCTYPE html><html><body><h1>private</h1><pre id=\"props\">{&quot;view&quot;:&quot;private&quot;,&quot;appView&quot;:&qu"
+      }
+    }
+  }
+}

@@ -1,0 +1,8 @@
+[
+    {"name": "index", "componentId": 1, "requireId": 11, "hash": "aaa111", "cssfile": "aaa111.css"},
+    {"name": "index@phone", "componentId": 2, "requireId": 12, "hash": "bbb222", "cssfile": "bbb222.css"},
+    {"name": "not-found", "componentId": 3, "requireId": 13, "hash": "ccc333", "cssfile": "ccc333.css"},
+    {"name": "login", "componentId": 4, "requireId": 14, "hash": "ddd444", "cssfile": "ddd444.css"},
+    {"name": "private", "componentId": 5, "requireId": 15, "hash": "eee555", "cssfile": "eee555.css"},
+    {"isCommon": true, "hash": "common0", "cssfile": "common0.css"}
+]
