@@ -37,6 +37,23 @@ As soon as the message **Server running development at port: 3001** appears, you
 
 See http://itsaserver.io for the complete documentation and usage.
 
+### Using .scss files (since 17.0.0)
+
+Sass is compiled by [Dart Sass](https://sass-lang.com/dart-sass) (`sass`) instead of `node-sass`, which does not support Node.js 24. Every app that uses `.scss` adds `options: { implementation: require('sass') }` to its `sass-loader` rule:
+
+```js
+{
+    test: /\.scss$/,
+    use: [
+        // ...your other loaders
+        {
+            loader: 'sass-loader',
+            options: { implementation: require('sass') }
+        }
+    ]
+}
+```
+
 
 --------------
 
