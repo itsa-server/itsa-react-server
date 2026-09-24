@@ -176,6 +176,17 @@ Request decorations are unchanged: `getAuthCookie`, `getPropsCookie`,
   returns `h.reactview(appConfig.pageNotFoundView)` for a 404 on an HTML
   page, else `h.continue`; it reads `request.url.pathname` instead of
   `request.url.path`.
+- **Security fix (added 2026-09-25, approved by the maintainer):** every
+  asset route that serves `request.params.<name>` confines the file to its
+  own base directory with `h.file(name, {confine: baseDir})`. Today an
+  encoded slash (`/assets/..%2F..%2F..%2F..%2F.cookierc`) escapes the
+  build directory and serves any file under the app root, including the
+  cookie passwords in `.cookierc`; reproduced on 17.x/hapi 16 and on a
+  straight hapi 21 port. With the fix such a request gets 403. Routes:
+  `/assets/{version}/{filename*}`, `/assets-private/{version}/{filename*}`,
+  `/assets/_itsa_server_external_modules/{versionedmodule*}`,
+  `/assets/local/{filename*}`, `/assets/{filename*}`, and the
+  `h.assets(filename)` decoration.
 - Routes are registered with `server.route(routes)`. `activateRoutes`,
   its 5-second timer and the no-op `routes.prefix` assignment are removed
   (no consumer uses them).
@@ -302,6 +313,9 @@ The parity test (§8.3) allows exactly these differences:
 3. An action throwing a non-Boom error responds with a generic 500 body
    instead of "Action-file not found".
 4. `changeTtl` sets the requested TTL instead of deleting the cookie.
+5. Asset requests whose filename escapes the route's directory get 403
+   instead of the file (§4.5). The parity request list contains no such
+   request; this is covered by the built-in route tests.
 
 Headers outside the recorded fields (§8.3 step 2) are not compared. Any
 other difference in a recorded field is a finding to fix or report, not
@@ -335,7 +349,7 @@ something to add to this list silently.
 | Middleware | `/nl/...` sets language and strips prefix; `Accept-Language`; device affinity; DDoS limit triggers |
 | Auth | no cookie → login view (takeover, `x-noauth`); `h.login` sets `itsa-id` with `SameSite=Lax`; that cookie opens the route; wrong scope → 403 → login view; `h.logout`; service-worker init |
 | Cookies | `x-cookie` define / set / delete / remove / ttl; `changeTtl` fix; `refreshTtl` |
-| Built-in routes | favicon (local and CDN redirect); versioned and unversioned assets; service-worker JS |
+| Built-in routes | favicon (local and CDN redirect); versioned and unversioned assets; service-worker JS; encoded-slash traversal on every asset route and `h.assets` → 403 |
 | Socket server | starts; socket.io polling endpoint answers |
 
 ### 8.3 Parity against hapi 16
