@@ -8,6 +8,7 @@ Spec: `docs/superpowers/specs/2026-09-24-hapi21-migration-design.md`
 One line per task, added in the task's own commit: `- Task N — <short sha of the previous commit or "this commit"> — <one-line result>`.
 
 - Task 1 — this commit — fixture app, parity tooling, hapi 16 snapshot recorded
+- Task 2 — 74d9ff7 — plugin registers on hapi 21 (@hapi/hapi, inert 7, vision 7); 7 startup tests pass; `npm install` needed `--legacy-peer-deps` (pre-existing react@15 vs itsa-react-globalstate peer conflict, unrelated to hapi)
 
 ## Interruptions
 
