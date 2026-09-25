@@ -30,7 +30,7 @@
         "react/no-danger": 0,
         "react/no-multi-comp": 2,
         "react/self-closing-comp": 2,
-        "react/wrap-multilines": 2,
+        "react/jsx-wrap-multilines": 2,
         "array-bracket-spacing": [2, "never"],
         "brace-style": [2, "stroustrup"],
         "camelcase": [2, {"properties": "always"}],
@@ -44,7 +44,7 @@
         "keyword-spacing": 2,
         "max-len": [2, 220, 2],
         "no-cond-assign": 0,
-        "no-console": [2, { allow: ["warn", "error"] }],
+        "no-console": [2, { allow: ["warn", "error", "debug"] }],
         "no-else-return": 2,
         "no-eq-null": 0,
         "no-extra-parens": 0,
@@ -57,7 +57,7 @@
         "space-before-blocks": 2,
         "space-before-function-paren": ["error", {
             "anonymous": "never",
-            "named": "always",
+            "named": "never",
             "asyncArrow": "always"
         }],
         "space-in-parens": [2, "never"],

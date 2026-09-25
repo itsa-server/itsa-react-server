@@ -102,9 +102,9 @@
     "hapi": "^16.4.0"
   },
   "scripts": {
-    "pretest": "eslint  ./lib/*.js",
+    "pretest": "eslint ./lib",
     "test": "node --test --test-force-exit \"tests/*.test.js\"",
-    "lint": "eslint ./lib/*.js"
+    "lint": "eslint ./lib"
   },
   "homepage": "http://itsaserver.io",
   "maintainers": [
