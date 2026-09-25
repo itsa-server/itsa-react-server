@@ -5,37 +5,41 @@ MVC server for serverside rendered react apps.
 
 You can use the **itsa-cli** to setup new web-applications. A full description, visit [http://itsaserver.io](http://itsaserver.io).
 
-## Changes in 17.1.0
+## Upgrading to 18.0.0
 
-**This release is breaking for apps still on React 15** (a `^17.0.0` range without a lockfile picks
-it up automatically).
+Version 18 moves from hapi 16 to **hapi 21** and from React 15 to **React 16**. It is a breaking
+release: every app built on itsa-react-server needs code changes. The full guide with before/after
+examples is [MIGRATION-18.md](MIGRATION-18.md); this is the checklist.
 
-- itsa-react-server renders with React 16 (was 15): apps need `react` and `react-dom` ^16. The
-  rendered markup is unchanged for the tested pages; React 16 writes `style` attributes without the
-  trailing `;` and keeps unknown attributes that React 15 dropped (harmless for browsers). The
-  default manifest's external modules point at React 16's `umd/` files. Apps whose own
-  `src/manifest.json` lists `external-modules` (top level or under `environments`) must change
-  React's `dist/` files to `react/umd/react.production.min.js`,
-  `react-dom/umd/react-dom.production.min.js` and
-  `react-dom/umd/react-dom-server.browser.production.min.js` (the matching `.development.js` files
-  for `local` and `development`): the app's array replaces the default one, and the build only
-  prints a warning when a file is missing, so the client would ship without React.
-- React 16 removed `React.PropTypes`, `React.createClass` and `React.DOM`; use `prop-types`,
-  `create-react-class` and `react-dom-factories`.
-- Fixed a memory leak on every page render (2-6 KB per page). A long-running worker ended with
-  `FATAL ERROR ... out of memory`; in PM2 cluster mode that message only shows up in
-  `~/.pm2/pm2.log`, not in the app's own error log.
-- Fixed a memory leak in the socket server: websocket compression is off and socket.io is 2.5
-  (browsers get socket.io-client 2.5.0 after the next build, and a vanished client is dropped after
-  45 s instead of 30 s). A client message may still be 100 MB; set `socketServer.maxHttpBufferSize`
-  (bytes) in the manifest to lower it. Each worker buffers a whole client message up to that size;
-  `0` or an empty value falls back to 100 MB.
-- Fixed: on Node.js 16 and later, requests with a payload (POST, PUT, ...) got no response (a hapi 16
-  issue, worked around by this package).
-- Fixed: on Node.js 12 and later, pages logged an error for every missing `@phone`/`@tablet` model.
-- Fixed: a malformed socket message could crash the process.
-- Note: in PM2 cluster mode the workers run on the Node.js version of the PM2 daemon. After switching
-  Node.js (for example with nvm), run `pm2 update`.
+**What your app needs**
+
+1. **Node.js 14 or later** (tested on Node 24).
+2. **Dependencies:** remove `hapi`; install `@hapi/hapi@^21`, `itsa-react-server@^18`,
+   `react@^16.14.0` and `react-dom@^16.14.0`. Replace `boom`/`hoek`/`inert`/`vision` with their
+   `@hapi/*` packages if your app uses them directly.
+3. **`src/manifest.json`:** replace `react/dist/...` and `react-dom/dist/...` paths in
+   `external-modules` with the React 16 `umd/` files (table in the guide).
+4. **`server.js`:** create the server with
+   `Hapi.server(Object.assign(reactServer.getServerOptions(manifest), {...your options}))`, then
+   `await server.register({plugin: reactServer, options: manifest})` and `await server.start()`.
+   No `server.connection()`, no callbacks.
+5. **Routes (`src/routes.js`):** every handler **returns** — `handler: (request, h) => h.reactview('index')`.
+   A handler without `return` answers 500.
+6. **`reply` becomes `h` everywhere:** route handlers, actions (`src/actions`), models
+   (`src/models`, `src/model-general.js`, `src/initial-globalstate.js`) and the authentication
+   `validateFunc`. `reply.reactview/action/assets/login/logout/generateProps/setBodyDataAttr`
+   become the same methods on `h`; `reply.request` becomes `h.request`.
+7. **Actions return their response:** `reply(stream).header(...)` becomes
+   `return h.response(stream).header(...)`; a returned value is sent as before.
+8. **React 15 → 16 component changes:** `React.PropTypes` and `React.createClass` are gone.
+9. **Check the behaviour changes:** cookies are sent with `SameSite=Lax`; `request.url` is a
+   WHATWG `URL` (use `pathname`/`search`); multipart uploads parsed by hapi need
+   `payload: {multipart: true}`; an empty response answers 204 instead of 200; `.js` assets are
+   served as `text/javascript`; a failing plugin start now makes `server.register()` reject.
+
+**Security fix — upgrade soon.** Up to 17.x, an asset URL with an encoded `../`
+(for example `/assets/..%2F..%2F..%2F..%2F.cookierc`) can read any file of the app, including the
+cookie passwords in `.cookierc`. 18.0.0 confines every asset route to its own directory.
 
 ## Installation
 

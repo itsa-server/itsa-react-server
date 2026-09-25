@@ -7,11 +7,10 @@
 const {test, before, after, beforeEach} = require('node:test'),
     assert = require('node:assert'),
     fs = require('fs'),
-    os = require('os'),
     path = require('path'),
     Module = require('module'),
-    START_DIR = process.cwd(),
-    APP = fs.realpathSync(fs.mkdtempSync(path.join(os.tmpdir(), 'itsa-models-'))),
+    REPO = path.resolve(__dirname, '..'),
+    APP = fs.mkdtempSync(path.join(REPO, 'tests', 'fixtures', '.tmp-models-')),
     originalError = console.error,
     originalDebug = console.debug,
     originalLoad = Module._load;
@@ -57,7 +56,7 @@ after(() => {
     console.error = originalError;
     console.debug = originalDebug;
     Module._load = originalLoad;
-    process.chdir(START_DIR);
+    process.chdir(REPO);
     fs.rmSync(APP, {recursive: true, force: true});
 });
 

@@ -1,0 +1,6 @@
+module.exports = {
+    'app-authentication': 'fixture-app-authentication-password-0001',
+    'body-data-attr': 'fixture-body-data-attr-cookie-password-02',
+    'not-exposed': 'fixture-not-exposed-cookie-password-00003',
+    'props': 'fixture-props-cookie-password-000000000004'
+};

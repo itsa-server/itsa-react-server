@@ -9,7 +9,7 @@ const {test, before, after} = require('node:test'),
     ioClient = require('socket.io-client'),
     Event = require('itsa-event'),
     SocketServer = require('../lib/socketio/socketserver'),
-    PORT = 4802,
+    PORT = 4798,
     STARTUP = 1234567890;
 
 const clients = [];

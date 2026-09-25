@@ -10,7 +10,7 @@ const {test, before, after} = require('node:test'),
     path = require('path'),
     ioClient = require('socket.io-client'),
     SocketServer = require('../lib/socketio/socketserver'),
-    PORT = 4801,
+    PORT = 4797,
     STARTUP = 1234567890;
 
 const clients = [];

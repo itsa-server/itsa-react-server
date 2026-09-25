@@ -6,10 +6,9 @@
 const {test, before, after} = require('node:test'),
     assert = require('node:assert'),
     fs = require('fs'),
-    os = require('os'),
     path = require('path'),
-    START_DIR = process.cwd(),
-    APP = fs.realpathSync(fs.mkdtempSync(path.join(os.tmpdir(), 'itsa-fpv-')));
+    REPO = path.resolve(__dirname, '..'),
+    APP = fs.mkdtempSync(path.join(REPO, 'tests', 'fixtures', '.tmp-fpv-'));
 
 let findPackageVersion, fpvModule;
 
@@ -30,7 +29,7 @@ before(() => {
 });
 
 after(() => {
-    process.chdir(START_DIR);
+    process.chdir(REPO);
     fs.rmSync(APP, {recursive: true, force: true});
 });
 
