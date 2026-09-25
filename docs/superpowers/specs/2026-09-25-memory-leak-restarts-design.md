@@ -98,10 +98,17 @@ about 300 KB RSS per connected browser tab.
 - **Model lookup:** compare only the first line of the error message; cache only "model file does
   not exist" (a model that fails to load is still retried and logged on every request, as before).
   Watch mode restarts the server on any `src/**` change, so the negative cache is safe.
-- **17.x POST hang:** new `lib/hapi-plugin/helpers/request-close-fix.js`. On Node >= 16 an
-  `onRequest` extension replaces hapi 16's `req 'close'` listener with a `res 'close'` listener that
-  bails only when the response has not ended (what hapi >= 20.2.1 does). Registered from
-  `middleware.generate`.
+- **17.x POST hang:** new `lib/hapi-plugin/helpers/request-close-fix.js`, registered from
+  `middleware.generate`; on Node >= 16 it adds an `onRequest` extension (design as built):
+  - request.js: its `_onClose` is moved from the request's 'close' to the response's 'close', and
+    runs there only when the response has not ended (what hapi >= 20.2.1 does).
+  - transmit.js subscribes one `onClose` to both the request's and the response's 'close'. On the
+    request's first 'close', every request 'close' listener that is also on the response is detached
+    from the request (its response subscription still sees a disconnect), and the event is then
+    emitted normally, so app listeners and Node's stream utilities (`stream.finished`, `pipeline`,
+    for-await, ...) keep working.
+  - An earlier design that held the request's 'close' event back stalled `stream.finished` and
+    `pipeline` on the request, and was dropped.
 - **17.x React 16 and lockfile:** the only ERESOLVE on `master` is React 15 at the root against
   `itsa-react-globalstate`'s peer `react >=16` (every published globalstate version needs it).
   `react`/`react-dom` go to `^16.14.0` and `jsx-view.js` renders with `React.createElement` instead of
@@ -129,4 +136,6 @@ about 300 KB RSS per connected browser tab.
 - New tests fail before and pass after each fix; full suites pass on both lines.
 - The measurement harnesses show flat heap for page renders (default manifest) and flat RSS for
   abrupt socket disconnects on both lines, and a real-HTTP POST is answered on 17.1.0 with Node 24.
+  Socket churn was measured on 18.x only; 17.x uses the identical socket.io, engine.io and ws versions
+  and options.
 - `npm run lint` passes on both lines; 17.x `npm ci` works from the rebuilt lock.

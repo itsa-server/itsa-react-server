@@ -217,6 +217,8 @@ that message, anything else to show the login view. `reply.logout()` becomes `h.
     instead of 30 s (`pingTimeout` 20 s), and websocket messages are no longer compressed
     (permessage-deflate leaked memory and cost about 300 KB per connected browser). A client message
     may still be 100 MB; set `socketServer.maxHttpBufferSize` (bytes) in the manifest to lower it.
+    Each worker buffers a whole client message up to that size, so a lower value limits oversized or
+    hostile messages; `0` or an empty value falls back to 100 MB.
 
 ## 9. Finding everything to change
 

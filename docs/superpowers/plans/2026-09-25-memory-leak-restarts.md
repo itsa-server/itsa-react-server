@@ -73,7 +73,7 @@ const writePackage = (dir, content) => {
 before(() => {
     writePackage('', JSON.stringify({name: 'app', version: '3.2.1'}));
     writePackage('node_modules/some-package', JSON.stringify({name: 'some-package', version: '1.2.3'}));
-    writePackage('node_modules/bom-package', '﻿'+JSON.stringify({name: 'bom-package', version: '7.0.0'}));
+    writePackage('node_modules/bom-package', '\uFEFF'+JSON.stringify({name: 'bom-package', version: '7.0.0'}));
     writePackage('externals/external-package', JSON.stringify({name: 'external-package', version: '4.5.6'}));
     // find-package-version reads process.cwd() when it loads
     process.chdir(APP);
@@ -220,7 +220,7 @@ Expected: `repeated lookups keep no modules` FAILS (children grew by 1000), `ful
 const fs = require('fs'),
     cwd = process.cwd(),
     path = require('path'),
-    BOM = /^﻿/;
+    BOM = /^\uFEFF/;
 
 // the parsed package.json, or undefined when the file is missing or unreadable
 const readPackage = file => {
@@ -1074,7 +1074,7 @@ const writePackage = (dir, content) => {
 before(() => {
     writePackage('', JSON.stringify({name: 'app', version: '3.2.1'}));
     writePackage('node_modules/some-package', JSON.stringify({name: 'some-package', version: '1.2.3'}));
-    writePackage('node_modules/bom-package', '﻿'+JSON.stringify({name: 'bom-package', version: '7.0.0'}));
+    writePackage('node_modules/bom-package', '\uFEFF'+JSON.stringify({name: 'bom-package', version: '7.0.0'}));
     writePackage('externals/external-package', JSON.stringify({name: 'external-package', version: '4.5.6'}));
     // find-package-version reads process.cwd() when it loads
     process.chdir(APP);
@@ -1147,7 +1147,7 @@ Expected: `repeated lookups keep no modules` FAILS (children grew by 1000); the 
 const fs = require('fs'),
     cwd = process.cwd(),
     path = require('path'),
-    BOM = /^﻿/;
+    BOM = /^\uFEFF/;
 
 // the parsed package.json, or undefined when the file is missing or unreadable
 const readPackage = file => {
@@ -1678,6 +1678,12 @@ Co-Authored-By: Claude Opus 5.5 (1M context) <noreply@anthropic.com>"
 ---
 
 ### Task 11: 17.x hapi 16 answers requests with a payload on Node >= 16; version 17.1.0
+
+> **Note (after execution):** the `request-close-fix.js` snippet in this task proved insufficient:
+> moving only request.js's `_onClose` left transmit.js's own `onClose` on the request's 'close', which
+> still truncated the response once the body had been read. The design as built is described in the
+> spec's §6 (`docs/superpowers/specs/2026-09-25-memory-leak-restarts-design.md`, "17.x POST hang").
+> The task body below is kept as it was planned.
 
 **Files:**
 - Create: `$WT/lib/hapi-plugin/helpers/request-close-fix.js`
