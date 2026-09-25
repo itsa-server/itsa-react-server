@@ -5,6 +5,25 @@ MVC server for serverside rendered react apps.
 
 You can use the **itsa-cli** to setup new web-applications. A full description, visit [http://itsaserver.io](http://itsaserver.io).
 
+## Changes in 17.1.0
+
+- itsa-react-server renders with React 16 (was 15): apps need `react` and `react-dom` ^16. The
+  rendered markup is unchanged. The default manifest's external modules point at React 16's `umd/`
+  files.
+- Fixed a memory leak on every page render (2-6 KB per page). A long-running worker ended with
+  `FATAL ERROR ... out of memory`; in PM2 cluster mode that message only shows up in
+  `~/.pm2/pm2.log`, not in the app's own error log.
+- Fixed a memory leak in the socket server: websocket compression is off and socket.io is 2.5
+  (browsers get socket.io-client 2.5.0 after the next build, and a vanished client is dropped after
+  45 s instead of 30 s). A client message may still be 100 MB; set `socketServer.maxHttpBufferSize`
+  (bytes) in the manifest to lower it.
+- Fixed: on Node.js 16 and later, requests with a payload (POST, PUT, ...) got no response (a hapi 16
+  issue, worked around by this package).
+- Fixed: on Node.js 12 and later, pages logged an error for every missing `@phone`/`@tablet` model.
+- Fixed: a malformed socket message could crash the process.
+- Note: in PM2 cluster mode the workers run on the Node.js version of the PM2 daemon. After switching
+  Node.js (for example with nvm), run `pm2 update`.
+
 ## Installation
 
 Step 1: install itsa-cli globally:
