@@ -318,6 +318,11 @@ The parity test (§8.3) allows exactly these differences:
 5. Asset requests whose filename escapes the route's directory get 403
    instead of the file (§4.5). The parity request list contains no such
    request; this is covered by the built-in route tests.
+6. `.js` files served by Inert carry `Content-Type: text/javascript;
+   charset=utf-8` instead of `application/javascript; charset=utf-8`
+   (Inert 7's mime database follows RFC 9239). Body, etag and status are
+   unchanged. Found by the parity test; accepted by the maintainer on
+   2026-09-25.
 
 Headers outside the recorded fields (§8.3 step 2) are not compared. Any
 other difference in a recorded field is a finding to fix or report, not
