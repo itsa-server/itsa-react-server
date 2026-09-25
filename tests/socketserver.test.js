@@ -23,7 +23,7 @@ const poll = async url => {
 
 before(async () => {
     server = await fixture.startServer('plain', {
-        socketServer: {enabled: true, host: '127.0.0.1', port: PORT, 'proxy-port': PORT},
+        socketServer: {enabled: true, host: '127.0.0.1', port: PORT, 'proxy-port': PORT, maxHttpBufferSize: 5000000},
         sequentialClientUpdate: {delay: false}
     });
 });
@@ -37,4 +37,9 @@ test('the socket server starts and answers socket.io polling', async () => {
 test('pages receive the socket port', async () => {
     const body = JSON.parse((await server.inject('/_itsa_server_ajax_/props/aaa111/')).payload);
     assert.strictEqual(body.__appProps.socketport, PORT);
+});
+
+test('the manifest sets the largest client message (socketServer.maxHttpBufferSize)', () => {
+    const SocketServer = require('../lib/socketio/socketserver');
+    assert.strictEqual(SocketServer.getSocketServer().socketIO.eio.maxHttpBufferSize, 5000000);
 });

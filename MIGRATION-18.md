@@ -212,6 +212,11 @@ that message, anything else to show the login view. `reply.logout()` becomes `h.
    differ in your manifest, the cookies now follow their own block: check both.
 9. Removing a cookie now really removes it: the client's `cookie.removeCookie()` and `h.logout()`
    inside a `validateFunc`. Up to 17.x the cookie was set again in the same response.
+10. The socket server uses socket.io 2.5 (was 2.2). Browsers get socket.io-client 2.5.0 after the
+    next build (served from `_itsa_server_external_modules`), a vanished client is dropped after 45 s
+    instead of 30 s (`pingTimeout` 20 s), and websocket messages are no longer compressed
+    (permessage-deflate leaked memory and cost about 300 KB per connected browser). A client message
+    may still be 100 MB; set `socketServer.maxHttpBufferSize` (bytes) in the manifest to lower it.
 
 ## 9. Finding everything to change
 
