@@ -15,7 +15,9 @@ let server, port,
     closedRequests = 0,
     appCloses = 0,
     disconnects = 0,
-    streamClosed = false;
+    streamClosed = false,
+    postDisconnects = 0,
+    postStreamClosed = false;
 
 const call = (method, body, agent, path) => new Promise((resolve, reject) => {
     const headers = (body===undefined) ? {} : {'content-type': 'application/json', 'content-length': Buffer.byteLength(body)},
@@ -62,6 +64,19 @@ before(() => new Promise((resolve, reject) => {
         });
         request.once('disconnect', () => {
             disconnects++;
+        });
+        return reply(source);
+    }});
+    server.route({method: 'POST', path: '/stream-post', handler: (request, reply) => {
+        // the body has been read (default payload parsing): the request's early 'close' detaches
+        // transmit.js's listener from it, so the disconnect is seen from the response only
+        const source = new stream.Readable({read() {}});
+        source.push('chunk');
+        source.on('close', () => {
+            postStreamClosed = true;
+        });
+        request.once('disconnect', () => {
+            postDisconnects++;
         });
         return reply(source);
     }});
@@ -153,4 +168,22 @@ test('a client that disconnects while the response streams is detected and the s
     });
     assert.strictEqual(disconnects, 1);
     assert.strictEqual(streamClosed, true);
+});
+
+test('a client that disconnects while a POST response streams is detected and the source stream is closed', async () => {
+    let received = false;
+    await new Promise(resolve => {
+        const req = http.request({host: '127.0.0.1', port, path: '/stream-post', method: 'POST', headers: {'content-type': 'application/json', 'content-length': 2}, timeout: 3000}, res => {
+            res.once('data', () => {
+                received = true;
+                req.destroy();
+            });
+        });
+        req.on('error', () => {});
+        req.end('{}');
+        setTimeout(resolve, 300);
+    });
+    assert.strictEqual(received, true); // the response did stream: the disconnect came mid-response
+    assert.strictEqual(postDisconnects, 1);
+    assert.strictEqual(postStreamClosed, true);
 });

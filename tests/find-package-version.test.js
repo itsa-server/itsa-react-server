@@ -21,7 +21,7 @@ const writePackage = (dir, content) => {
 before(() => {
     writePackage('', JSON.stringify({name: 'app', version: '3.2.1'}));
     writePackage('node_modules/some-package', JSON.stringify({name: 'some-package', version: '1.2.3'}));
-    writePackage('node_modules/bom-package', '﻿'+JSON.stringify({name: 'bom-package', version: '7.0.0'}));
+    writePackage('node_modules/bom-package', '\uFEFF'+JSON.stringify({name: 'bom-package', version: '7.0.0'}));
     writePackage('externals/external-package', JSON.stringify({name: 'external-package', version: '4.5.6'}));
     // find-package-version reads process.cwd() when it loads
     process.chdir(APP);

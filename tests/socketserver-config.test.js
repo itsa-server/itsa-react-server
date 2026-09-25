@@ -1,6 +1,7 @@
 'use strict';
 
-// socketServer.maxHttpBufferSize in the manifest reaches engine.io (plugin.js passes it to start()).
+// SocketServer.start passes maxHttpBufferSize to engine.io (plugin.js's pass-through from the
+// manifest's socketServer.maxHttpBufferSize is not covered here).
 
 const {test, before} = require('node:test'),
     assert = require('node:assert'),
