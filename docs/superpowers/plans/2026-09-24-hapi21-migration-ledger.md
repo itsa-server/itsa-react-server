@@ -15,6 +15,7 @@ One line per task, added in the task's own commit: `- Task N — <short sha of t
 - Task 5 — 893b486 — built-in routes on hapi 21; every asset route and h.assets() confined to its directory (encoded ../ → 403, spec §4.5 security fix); disabled service worker keeps 200 via route response.emptyStatusCode (hapi 21 default for empty payloads is 204); lint at baseline (apply-server-routes 1, extend-toolkit 2) (inline execution by the controller)
 - Task 6 — a4a12d8 — encrypted cookies on hapi 21 with SameSite=Lax; h.state/h.unstate; changeTtl fixed (typeof ttlSec; x-ms converted with Number(), non-numeric → TTL 0 as in 17.x); 9 cookie tests + suite green; lint at baseline (cookie.js 15, cookie-handler 2, change-cookies 1, refresh-cookies 1) (inline execution by the controller)
 - Task 7 — fc30d84 — authentication plugin and scheme on hapi 21 (h.authenticated / takeover login view, h.login / h.logout, validateFunc(request, h, authCookie), service-worker scope via server.auth.lookup); 11 auth tests + suite green; lint at baseline (handler 2, plugin 4) (inline execution by the controller)
+- Task 8 — 696c722 — socket server on its own hapi 21 server (Hapi.server({host, port}), start() promise logged on failure); 2 socket tests + suite green; lint at baseline (socketserver 8) (inline execution by the controller)
 
 ## Interruptions
 
