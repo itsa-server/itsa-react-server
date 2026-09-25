@@ -7,12 +7,15 @@
 const {test, before, after} = require('node:test'),
     assert = require('node:assert'),
     http = require('http'),
+    stream = require('stream'),
     Hapi = require('hapi'),
     requestCloseFix = require('../lib/hapi-plugin/helpers/request-close-fix');
 
 let server, port,
     closedRequests = 0,
-    appCloses = 0;
+    appCloses = 0,
+    disconnects = 0,
+    streamClosed = false;
 
 const call = (method, body, agent, path) => new Promise((resolve, reject) => {
     const headers = (body===undefined) ? {} : {'content-type': 'application/json', 'content-length': Buffer.byteLength(body)},
@@ -45,6 +48,23 @@ before(() => new Promise((resolve, reject) => {
         });
         return reply('ok');
     }});
+    server.route({method: 'POST', path: '/finished', config: {payload: {output: 'stream', parse: false}, handler: (request, reply) => {
+        request.payload.resume();
+        stream.finished(request.payload, () => {
+            reply('done');
+        });
+    }}});
+    server.route({method: 'GET', path: '/stream', handler: (request, reply) => {
+        const source = new stream.Readable({read() {}});
+        source.push('chunk');
+        source.on('close', () => {
+            streamClosed = true;
+        });
+        request.once('disconnect', () => {
+            disconnects++;
+        });
+        return reply(source);
+    }});
     server.on('request-internal', (request, event, tags) => {
         if (tags.closed) {
             closedRequests++;
@@ -62,8 +82,8 @@ before(() => new Promise((resolve, reject) => {
 after(() => new Promise(resolve => server.stop(resolve)));
 
 test('a POST with a body is answered', async () => {
-    const closedBefore = closedRequests;
-    const res = await call('POST', JSON.stringify({a: 1}));
+    const closedBefore = closedRequests,
+        res = await call('POST', JSON.stringify({a: 1}));
     assert.strictEqual(res.statusCode, 200);
     assert.deepStrictEqual(JSON.parse(res.body), {method: 'post', payload: {a: 1}});
     await new Promise(resolve => setTimeout(resolve, 100));
@@ -99,6 +119,12 @@ test('several POSTs over one keep-alive connection are all answered', async () =
     }
 });
 
+test('a raw payload stream reaches its end and the request is answered', async () => {
+    const res = await call('POST', JSON.stringify({a: 1}), undefined, '/finished');
+    assert.strictEqual(res.statusCode, 200);
+    assert.strictEqual(res.body, 'done');
+});
+
 test('a client that disconnects before the response is still detected', async () => {
     const closedBefore = closedRequests;
     await new Promise(resolve => {
@@ -112,4 +138,19 @@ test('a client that disconnects before the response is still detected', async ()
     });
     await new Promise(resolve => setTimeout(resolve, 400));
     assert.strictEqual(closedRequests, closedBefore+1);
+});
+
+test('a client that disconnects while the response streams is detected and the source stream is closed', async () => {
+    await new Promise(resolve => {
+        const req = http.request({host: '127.0.0.1', port, path: '/stream', method: 'GET', timeout: 3000}, res => {
+            res.once('data', () => {
+                req.destroy();
+            });
+        });
+        req.on('error', () => {});
+        req.end();
+        setTimeout(resolve, 300);
+    });
+    assert.strictEqual(disconnects, 1);
+    assert.strictEqual(streamClosed, true);
 });
