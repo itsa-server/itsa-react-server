@@ -86,12 +86,15 @@ test('h.logout in an action unsets itsa-id', async () => {
     assert.strictEqual(cookie.attributes['max-age'], '0');
 });
 
-// The unset cookie is NOT asserted: rendering the login view refreshes the auth cookie from the request,
-// which overrides h.logout()'s unstate. That is 17.x behaviour (the parity test pins it), not part of the port.
-test('validateFunc receives h and can call h.logout()', async () => {
-    const {res, props} = await page({url: '/private?logout=toolkit', headers: {cookie: fixture.cookieHeader(userLogin)}});
+test('validateFunc receives h and h.logout() unsets itsa-id, also when the login view renders', async () => {
+    const {res, props} = await page({url: '/private?logout=toolkit', headers: {cookie: fixture.cookieHeader(userLogin)}}),
+        cookie = findCookie(res, 'itsa-id');
     assert.strictEqual(res.statusCode, 200);
     assert.strictEqual(props.view, 'login');
+    assert.ok(cookie, 'a Set-Cookie for itsa-id is sent');
+    assert.strictEqual(cookie.value, '');
+    assert.strictEqual(cookie.attributes['max-age'], '0');
+    assert.strictEqual(props.loggedIn, false);
 });
 
 test('a service-worker init request is authenticated with the route scope', async () => {

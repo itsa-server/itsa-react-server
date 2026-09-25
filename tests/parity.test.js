@@ -29,6 +29,20 @@ const INTENDED_DIFFERENCES = {
         assert.strictEqual(actual.contentType, 'text/javascript; charset=utf-8');
         assert.deepStrictEqual(Object.assign({}, actual, {contentType: null}), Object.assign({}, expected, {contentType: null}));
     },
+    // §7.7: removing a cookie unsets it, also when the request carried it (hapi 16 set it again)
+    'cookie-remove': (actual, expected) => {
+        const cookie = actual.cookies.find(item => item.name==='itsa-props');
+        assert.strictEqual(actual.status, expected.status);
+        assert.strictEqual(actual.contentType, expected.contentType);
+        assert.ok(cookie && cookie.empty && cookie.attributes.includes('max-age=0'), JSON.stringify(actual.cookies));
+    },
+    'auth-validate-logout': (actual, expected) => {
+        const cookie = actual.cookies.find(item => item.name==='itsa-id');
+        assert.strictEqual(actual.status, expected.status);
+        assert.strictEqual(actual.noAuth, expected.noAuth);
+        assert.strictEqual(actual.contentType, expected.contentType);
+        assert.ok(cookie && cookie.empty && cookie.attributes.includes('max-age=0'), JSON.stringify(actual.cookies));
+    },
     // §7.4: changeTtl sets the requested ttl in seconds (hapi 16 set Max-Age=0)
     'cookie-ttl': actual => {
         const cookie = actual.cookies.find(item => item.name==='itsa-props');

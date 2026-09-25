@@ -210,6 +210,8 @@ that message, anything else to show the login view. `reply.logout()` becomes `h.
 8. The `props` and `body-data-attr` cookie settings in your manifest are no longer swapped. Up to
    17.x each cookie got the other one's `enabled`, `onlySsl` and `ttl-sec`. If the two blocks
    differ in your manifest, the cookies now follow their own block: check both.
+9. Removing a cookie now really removes it: the client's `cookie.removeCookie()` and `h.logout()`
+   inside a `validateFunc`. Up to 17.x the cookie was set again in the same response.
 
 ## 9. Finding everything to change
 

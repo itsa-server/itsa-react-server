@@ -63,6 +63,16 @@ test('the initial globalstate is merged into this.props and receives h', async (
     assert.deepStrictEqual(props.initialGlobalState, {counter: 1, stateGotToolkit: true});
 });
 
+test('remove unsets the cookie, also when the request carried it', async () => {
+    const res = await server.inject({url: PROPS_URL, headers: Object.assign(cookieAction('remove'), {cookie: fixture.cookieHeader(defined)})}),
+        cookie = findCookie(res, 'itsa-props');
+    assert.strictEqual(res.statusCode, 200);
+    assert.ok(cookie, 'a Set-Cookie for itsa-props is sent');
+    assert.strictEqual(cookie.value, '');
+    assert.strictEqual(cookie.attributes['max-age'], '0');
+    assert.deepStrictEqual(JSON.parse(res.payload).__appProps.cookie, {});
+});
+
 test('ttl sets Max-Age in seconds (changeTtl fix, spec §4.12)', async () => {
     const res = await server.inject({url: PROPS_URL, headers: Object.assign(cookieAction('ttl', {'x-ms': '600'}), {cookie: fixture.cookieHeader(defined)})});
     assert.strictEqual(res.statusCode, 200);

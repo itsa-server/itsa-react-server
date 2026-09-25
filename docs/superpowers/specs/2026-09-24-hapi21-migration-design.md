@@ -323,6 +323,10 @@ The parity test (§8.3) allows exactly these differences:
    (Inert 7's mime database follows RFC 9239). Body, etag and status are
    unchanged. Found by the parity test; accepted by the maintainer on
    2026-09-25.
+7. Removing a cookie unsets it (§12.3): the `x-cookie` remove action and
+   `h.logout()` inside a `validateFunc` answer with the cookie emptied
+   (`Max-Age=0`); hapi 16 set it again in the same response. The response
+   body follows (`this.props` without the cookie, `loggedIn: false`).
 
 Headers outside the recorded fields (§8.3 step 2) are not compared. Any
 other difference in a recorded field is a finding to fix or report, not
@@ -460,3 +464,9 @@ Found while verifying the port; present in 17.x as well. The maintainer asked to
    see their cookies follow their own block (migration guide §8).
 
 Covered by `tests/socketserver-defaults.test.js` and `tests/cookies-single.test.js`.
+3. **A removed cookie came back** in the same response: `removeCookie` deleted the in-request copy,
+   so `refreshTtl` (run for every props request and page render) read the cookie from the request
+   and set it again. This broke the client-side `removeCookie()` of the props / body-data /
+   not-exposed cookies and `h.logout()` inside a `validateFunc`. `removeCookie` now stores an empty
+   in-request cookie, so the refresh skips it. Covered by `tests/cookies.test.js` ("remove unsets
+   the cookie…") and `tests/auth.test.js` ("… h.logout() unsets itsa-id …"); intended difference §7.7.
