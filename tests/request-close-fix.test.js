@@ -11,11 +11,12 @@ const {test, before, after} = require('node:test'),
     requestCloseFix = require('../lib/hapi-plugin/helpers/request-close-fix');
 
 let server, port,
-    closedRequests = 0;
+    closedRequests = 0,
+    appCloses = 0;
 
-const call = (method, body, agent) => new Promise((resolve, reject) => {
+const call = (method, body, agent, path) => new Promise((resolve, reject) => {
     const headers = (body===undefined) ? {} : {'content-type': 'application/json', 'content-length': Buffer.byteLength(body)},
-        req = http.request({host: '127.0.0.1', port, path: '/echo', method, headers, agent, timeout: 3000}, res => {
+        req = http.request({host: '127.0.0.1', port, path: path || '/echo', method, headers, agent, timeout: 3000}, res => {
             let data = '';
             res.on('data', chunk => {
                 data += chunk;
@@ -38,6 +39,12 @@ before(() => new Promise((resolve, reject) => {
     server.route({method: 'POST', path: '/slow', handler: (request, reply) => {
         setTimeout(() => reply('late'), 300);
     }});
+    server.route({method: 'POST', path: '/listen', handler: (request, reply) => {
+        request.raw.req.once('close', () => {
+            appCloses++;
+        });
+        return reply('ok');
+    }});
     server.on('request-internal', (request, event, tags) => {
         if (tags.closed) {
             closedRequests++;
@@ -55,9 +62,19 @@ before(() => new Promise((resolve, reject) => {
 after(() => new Promise(resolve => server.stop(resolve)));
 
 test('a POST with a body is answered', async () => {
+    const closedBefore = closedRequests;
     const res = await call('POST', JSON.stringify({a: 1}));
     assert.strictEqual(res.statusCode, 200);
     assert.deepStrictEqual(JSON.parse(res.body), {method: 'post', payload: {a: 1}});
+    await new Promise(resolve => setTimeout(resolve, 100));
+    assert.strictEqual(closedRequests, closedBefore);
+});
+
+test('an app listener for the request close event still runs', async () => {
+    const res = await call('POST', '{}', undefined, '/listen');
+    assert.strictEqual(res.statusCode, 200);
+    await new Promise(resolve => setTimeout(resolve, 100));
+    assert.strictEqual(appCloses, 1);
 });
 
 test('an empty POST is answered', async () => {
