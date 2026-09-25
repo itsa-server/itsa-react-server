@@ -32,6 +32,8 @@ before(() => {
     writeModel('desktop-only', 'module.exports = () => ({fromModel: \'desktop-only\'});\n');
     writeModel('broken', 'require(\'itsa-no-such-module\');\nmodule.exports = () => ({});\n');
     writeModel('syntax-error', 'module.exports = (;\n');
+    writeModel('override-broken@tablet', 'require(\'itsa-no-such-module\');\nmodule.exports = () => ({});\n');
+    writeModel('override-broken', 'module.exports = () => ({fromModel: \'override-broken\'});\n');
     // model-handler reads process.cwd() when it loads
     process.chdir(APP);
     modelHandler = require('../lib/hapi-plugin/helpers/model-handler');
@@ -87,4 +89,13 @@ test('a model that fails to load is reported on every request', async () => {
     assert.match(errors[0][0].message, /itsa-no-such-module/);
     assert.match(errors[1][0].message, /itsa-no-such-module/);
     assert.ok(errors[2][0] instanceof SyntaxError);
+});
+
+test('a broken device model with a working fallback is reported on every request and the fallback is used', async () => {
+    const first = await merge('override-broken', 'tablet'),
+        second = await merge('override-broken', 'tablet');
+    assert.strictEqual(first.fromModel, 'override-broken');
+    assert.strictEqual(second.fromModel, 'override-broken');
+    assert.strictEqual(errors.length, 2);
+    assert.match(errors[1][0].message, /itsa-no-such-module/);
 });
