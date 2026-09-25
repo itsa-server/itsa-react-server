@@ -52,17 +52,17 @@
         {
             "module": "react",
             "ref": "React",
-            "file": "react/dist/react.min.js"
+            "file": "react/umd/react.production.min.js"
         },
         {
             "module": "react-dom",
             "ref": "ReactDOM",
-            "file": "react-dom/dist/react-dom.min.js"
+            "file": "react-dom/umd/react-dom.production.min.js"
         },
         {
             "module": "react-dom/server",
             "ref": "ReactDOMServer",
-            "file": "react-dom/dist/react-dom-server.min.js"
+            "file": "react-dom/umd/react-dom-server.browser.production.min.js"
         }
     ],
     "static-components-dir": [
@@ -120,17 +120,17 @@
                 {
                     "module": "react",
                     "ref": "React",
-                    "file": "react/dist/react.js"
+                    "file": "react/umd/react.development.js"
                 },
                 {
                     "module": "react-dom",
                     "ref": "ReactDOM",
-                    "file": "react-dom/dist/react-dom.js"
+                    "file": "react-dom/umd/react-dom.development.js"
                 },
                 {
                     "module": "react-dom/server",
                     "ref": "ReactDOMServer",
-                    "file": "react-dom/dist/react-dom-server.js"
+                    "file": "react-dom/umd/react-dom-server.browser.development.js"
                 }
             ]
         },
@@ -166,17 +166,17 @@
                 {
                     "module": "react",
                     "ref": "React",
-                    "file": "react/dist/react.js"
+                    "file": "react/umd/react.development.js"
                 },
                 {
                     "module": "react-dom",
                     "ref": "ReactDOM",
-                    "file": "react-dom/dist/react-dom.js"
+                    "file": "react-dom/umd/react-dom.development.js"
                 },
                 {
                     "module": "react-dom/server",
                     "ref": "ReactDOMServer",
-                    "file": "react-dom/dist/react-dom-server.js"
+                    "file": "react-dom/umd/react-dom-server.browser.development.js"
                 }
             ]
         }
