@@ -80,8 +80,8 @@
     "preboot": "^4.5.2",
     "prop-types": "^15.5.10",
     "ps-tree": "^1.1.0",
-    "react": "^15.5.4",
-    "react-dom": "^15.5.4",
+    "react": "^16.14.0",
+    "react-dom": "^16.14.0",
     "react-dom-factories": "^1.0.0",
     "remarkable": "^1.7.1",
     "require-reload": "^0.2.2",
@@ -103,7 +103,7 @@
   },
   "scripts": {
     "pretest": "eslint  ./lib/*.js",
-    "test": "mocha tests/*.js  && istanbul cover $(which _mocha) -- tests/*.js",
+    "test": "node --test --test-force-exit \"tests/*.test.js\"",
     "lint": "eslint ./lib/*.js"
   },
   "homepage": "http://itsaserver.io",
