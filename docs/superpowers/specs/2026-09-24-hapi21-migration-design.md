@@ -445,3 +445,18 @@ the first step and the only constraint found requires `>= 16`.
   byte-identical HTML on React 15 (recorded before the upgrade) and React 16
   (a committed test), and the startup tests still pass.
 
+
+## 12. Fixes for defects found during verification (added 2026-09-25, requested by the maintainer)
+
+Found while verifying the port; present in 17.x as well. The maintainer asked to fix the critical ones:
+
+1. **Every page answered 500** when the socket server is enabled and the manifest has no
+   `sequentialClientUpdate` (the itsa-cli templates ship that manifest): `build-props.js` now
+   treats a missing `sequentialClientUpdate` as `{}`.
+2. **Every page answered 500** when only one of the `props` / `body-data-attr` cookies is enabled,
+   and each of those two cookies got the other's `enabled`, `onlySsl` (the `Secure` flag) and
+   `ttl-sec`: `extend-toolkit.js` passed the two configs to `cookieHandler.register` in swapped
+   order. The call now follows the function's parameter order. Apps whose two cookie blocks differ
+   see their cookies follow their own block (migration guide §8).
+
+Covered by `tests/socketserver-defaults.test.js` and `tests/cookies-single.test.js`.

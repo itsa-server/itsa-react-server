@@ -207,6 +207,9 @@ that message, anything else to show the login view. `reply.logout()` becomes `h.
    `options`.
 7. `.js` files served from the asset routes carry `Content-Type: text/javascript` instead of
    `application/javascript` (the current standard, RFC 9239). Browsers treat both the same.
+8. The `props` and `body-data-attr` cookie settings in your manifest are no longer swapped. Up to
+   17.x each cookie got the other one's `enabled`, `onlySsl` and `ttl-sec`. If the two blocks
+   differ in your manifest, the cookies now follow their own block: check both.
 
 ## 9. Finding everything to change
 
