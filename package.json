@@ -106,7 +106,7 @@
   },
   "scripts": {
     "test": "node --test --test-force-exit \"tests/*.test.js\"",
-    "lint": "eslint ./lib/*.js"
+    "lint": "eslint ./lib"
   },
   "homepage": "http://itsaserver.io",
   "maintainers": [
